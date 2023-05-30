@@ -7,10 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MassTransit" Version="8.0.16" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.16" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Writer.Application\Writer.Application.csproj" />
     <ProjectReference Include="..\Writer.Domain\Writer.Domain.csproj" />
   </ItemGroup>
 

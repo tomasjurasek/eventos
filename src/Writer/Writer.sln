@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Writer.Domain", "Writer.Dom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Writer.Application", "Writer.Application\Writer.Application.csproj", "{7527B799-5495-48B9-85EB-4B8C89FFCAB0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Writer.Infrastructure", "Writer.Infrastructure\Writer.Infrastructure.csproj", "{3B02DE57-66FC-4478-AEC2-C9D1EA5A36CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{7527B799-5495-48B9-85EB-4B8C89FFCAB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7527B799-5495-48B9-85EB-4B8C89FFCAB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7527B799-5495-48B9-85EB-4B8C89FFCAB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B02DE57-66FC-4478-AEC2-C9D1EA5A36CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B02DE57-66FC-4478-AEC2-C9D1EA5A36CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B02DE57-66FC-4478-AEC2-C9D1EA5A36CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B02DE57-66FC-4478-AEC2-C9D1EA5A36CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
