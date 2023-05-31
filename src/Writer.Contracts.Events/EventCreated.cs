@@ -1,6 +1,6 @@
-﻿using Writer.Domain.Aggregates;
+﻿using Domain.Events.Models;
 
-namespace Writer.Domain.Events
+namespace Domain.Events
 {
     public record EventCreated : Event
     {

@@ -4,7 +4,7 @@ namespace Writer.Domain.Repositories
 {
     public interface IEventRepository
     {
-        Task FindAsync(Guid aggregateId);
+        Task<Event> FindAsync(Guid aggregateId);
         Task StoreAsync(Event aggregate);
     }
 }

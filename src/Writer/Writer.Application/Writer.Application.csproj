@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Writer.Domain\Writer.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+
 </Project>

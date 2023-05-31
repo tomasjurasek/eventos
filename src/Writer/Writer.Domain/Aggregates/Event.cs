@@ -1,6 +1,7 @@
 ﻿using Dawn;
+using Domain.Events;
+using Domain.Events.Models;
 using FluentResults;
-using Writer.Domain.Events;
 
 namespace Writer.Domain.Aggregates
 {
@@ -86,20 +87,7 @@ namespace Writer.Domain.Aggregates
 
             return Result.Ok();
         }
-
-
-        private void On(EventLocationChanged @event)
-        {
-            Location = @event.Location;
-        }
-
-        private void On(EventCanceled @event)
-        {
-            CreatedAt = @event.CreatedAt;
-            CanceledAt = @event.CanceledAt;
-        }
-
-        private void On(EventCreated @event)
+        public void On(EventCreated @event)
         {
             Id = @event.AggregateId;
             CreatedAt = @event.CreatedAt;
@@ -109,6 +97,17 @@ namespace Writer.Domain.Aggregates
             FinishedAt = @event.FinishedAt;
             Organizer = @event.Organizer;
             Location = @event.Location;
+        }
+
+        public void On(EventLocationChanged @event)
+        {
+            Location = @event.Location;
+        }
+
+        public void On(EventCanceled @event)
+        {
+            CreatedAt = @event.CreatedAt;
+            CanceledAt = @event.CanceledAt;
         }
     }
 }

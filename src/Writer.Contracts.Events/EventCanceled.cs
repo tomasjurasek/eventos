@@ -1,4 +1,4 @@
-﻿namespace Writer.Domain.Events
+﻿namespace Domain.Events
 {
     public record EventCanceled : Event
     {

@@ -1,5 +1,6 @@
 using FluentResults;
 using MassTransit;
+using MassTransit.Mediator;
 using Microsoft.AspNetCore.Mvc;
 using Writer.Application.Handlers.CreateEvent;
 
@@ -11,9 +12,9 @@ namespace Writer.Controllers
     {
         private readonly IRequestClient<CreateEventCommand> _createEventCommandHandlerClient;
 
-        public EventsController(IRequestClient<CreateEventCommand> createEventCommandHandlerClient)
+        public EventsController(IMediator mediator)
         {
-            _createEventCommandHandlerClient = createEventCommandHandlerClient;
+            _createEventCommandHandlerClient = mediator.CreateRequestClient<CreateEventCommand>();
         }
 
         [HttpPost("create")]

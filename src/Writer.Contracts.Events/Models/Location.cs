@@ -1,4 +1,4 @@
-﻿namespace Writer.Domain.Aggregates
+﻿namespace Domain.Events.Models
 {
     public record Location
     {

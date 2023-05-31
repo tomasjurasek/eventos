@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using Domain.Events.Models;
+using FluentResults;
 using MassTransit;
 using System.ComponentModel.DataAnnotations;
 using Writer.Application.Mappers;

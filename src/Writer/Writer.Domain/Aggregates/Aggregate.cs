@@ -1,4 +1,4 @@
-﻿using Writer.Domain.Events;
+﻿using Domain.Events;
 
 namespace Writer.Domain.Aggregates
 {
@@ -16,7 +16,7 @@ namespace Writer.Domain.Aggregates
 
 
         public Guid Id { get; protected set; }
-        public int Version { get; protected set; }
+        public int Version { get; internal set; }
         public DateTimeOffset CreatedAt { get; protected set; }
 
 

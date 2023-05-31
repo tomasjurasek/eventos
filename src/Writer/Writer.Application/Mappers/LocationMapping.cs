@@ -1,8 +1,9 @@
-﻿using Writer.Domain.Aggregates;
+﻿using Domain.Events.Models;
+using Writer.Domain.Aggregates;
 
 namespace Writer.Application.Mappers
 {
-    internal static class LocationMapping
+    public static class LocationMapping
     {
         public static Location Map(this Handlers.CreateEvent.Location location) => new Location
         {
