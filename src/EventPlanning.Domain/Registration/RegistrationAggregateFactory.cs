@@ -15,8 +15,6 @@ namespace EventPlanning.Domain.Registration
             {
                 return Result.Fail(ex.Message);
             }
-
-
         }
     }
 
