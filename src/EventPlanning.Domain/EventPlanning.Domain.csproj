@@ -11,4 +11,8 @@
     <PackageReference Include="FluentResults" Version="3.15.2" />
   </ItemGroup>
 
+    <ItemGroup>
+        <InternalsVisibleTo Include="EventPlanning.Tests"/>
+    </ItemGroup>
+
 </Project>

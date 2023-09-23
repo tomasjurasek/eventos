@@ -5,11 +5,13 @@ VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventPlanning.API", "EventPlanning.API\EventPlanning.API.csproj", "{0181B416-3F10-413B-9D86-004C9F03FAEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventPlanning.Domain", "EventPlanning.Domain\EventPlanning.Domain.csproj", "{4646D6F8-368D-4903-937D-811DBFFB73CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventPlanning.Domain", "EventPlanning.Domain\EventPlanning.Domain.csproj", "{4646D6F8-368D-4903-937D-811DBFFB73CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventPlanning.Application", "EventPlanning.Application\EventPlanning.Application.csproj", "{F0C5631F-8D44-4BB1-B815-FD908AF2521D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventPlanning.Application", "EventPlanning.Application\EventPlanning.Application.csproj", "{F0C5631F-8D44-4BB1-B815-FD908AF2521D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventPlanning.Infrastructure", "EventPlanning.Infrastructure\EventPlanning.Infrastructure.csproj", "{AAFAEBCF-6491-4FBE-897C-0B58EDC8E022}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventPlanning.Infrastructure", "EventPlanning.Infrastructure\EventPlanning.Infrastructure.csproj", "{AAFAEBCF-6491-4FBE-897C-0B58EDC8E022}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventPlanning.Tests", "EventPlanning.Tests\EventPlanning.Tests.csproj", "{C38BCAD7-EFFD-4382-BFA0-76EB53B1B19D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{AAFAEBCF-6491-4FBE-897C-0B58EDC8E022}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAFAEBCF-6491-4FBE-897C-0B58EDC8E022}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AAFAEBCF-6491-4FBE-897C-0B58EDC8E022}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C38BCAD7-EFFD-4382-BFA0-76EB53B1B19D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C38BCAD7-EFFD-4382-BFA0-76EB53B1B19D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C38BCAD7-EFFD-4382-BFA0-76EB53B1B19D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C38BCAD7-EFFD-4382-BFA0-76EB53B1B19D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
