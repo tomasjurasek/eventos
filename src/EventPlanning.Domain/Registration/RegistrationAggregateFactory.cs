@@ -9,13 +9,14 @@ namespace EventPlanning.Domain.Registration
             try
             {
                 var registration = new RegistrationAggregate(id, attendee);
+                return Result.Ok(registration);
             }
             catch (Exception ex)
             {
                 return Result.Fail(ex.Message);
             }
 
-            return Result.Ok();
+
         }
     }
 
