@@ -42,28 +42,63 @@ namespace EventPlanning.Tests.DomainTests
         [Fact]
         public void Accept_When_WaitingState_Should_Success()
         {
-            var registration = _registrationAggregateFactory.Create(Id, Attendee);
-
-            var result = registration.Value.Accept();
+            var registration = GetRegistration();
+            var result = registration.Accept();
 
             result.IsSuccess.Should().BeTrue();
-            registration.Value.State.Should().Be(RegistrationState.Accepted);
+            registration.State.Should().Be(RegistrationState.Accepted);
         }
 
         [Fact]
         public void Accept_When_DeclineState_Should_Fail()
         {
-            var registration = _registrationAggregateFactory.Create(Id, Attendee);
-            registration.Value.Decline();
+            var registration = GetRegistration();
+            registration.Decline();
 
-            var result = registration.Value.Accept();
+            var result = registration.Accept();
 
             result.IsFailed.Should().BeTrue();
-            registration.Value.State.Should().Be(RegistrationState.Declined);
+            registration.State.Should().Be(RegistrationState.Declined);
+        }
+
+        [Fact]
+        public void Decline_When_DeclineState_Should_Fail()
+        {
+            var registration = GetRegistration();
+            registration.Decline();
+
+            var result = registration.Decline();
+
+            result.IsFailed.Should().BeTrue();
+            registration.State.Should().Be(RegistrationState.Declined);
+        }
+
+        [Fact]
+        public void Decline_When_WaitingState_Should_Success()
+        {
+            var registration = GetRegistration();
+            var result = registration.Decline();
+
+            result.IsSuccess.Should().BeTrue();
+            registration.State.Should().Be(RegistrationState.Declined);
+        }
+
+        [Fact]
+        public void Decline_When_AcceptState_Should_Failt()
+        {
+            var registration = GetRegistration();
+            registration.Accept();
+
+            var result = registration.Decline();
+
+            result.IsFailed.Should().BeTrue();
+            registration.State.Should().Be(RegistrationState.Accepted);
         }
 
 
         public static string Id => Guid.NewGuid().ToString();
         public static Attendee Attendee => new Attendee();
+
+        public RegistrationAggregate GetRegistration() => new RegistrationAggregate(Id, Attendee);
     }
 }
