@@ -2,5 +2,6 @@
 {
     public class Attendee
     {
+        public required string Email { get; set; }
     }
 }

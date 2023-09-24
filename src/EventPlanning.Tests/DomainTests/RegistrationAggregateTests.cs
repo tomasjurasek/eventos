@@ -84,7 +84,7 @@ namespace EventPlanning.Tests.DomainTests
         }
 
         [Fact]
-        public void Decline_When_AcceptState_Should_Failt()
+        public void Decline_When_AcceptState_Should_Fail()
         {
             var registration = GetRegistration();
             registration.Accept();
@@ -95,9 +95,54 @@ namespace EventPlanning.Tests.DomainTests
             registration.State.Should().Be(RegistrationState.Accepted);
         }
 
+        [Fact]
+        public void Cancel_When_EventStartsLessThan4Hours_Should_Fail()
+        {
+            var registration = GetRegistration();
+
+            var result = registration.Cancel(DateTimeOffset.UtcNow.AddHours(3), Email);
+
+            result.IsFailed.Should().BeTrue();
+            registration.State.Should().Be(RegistrationState.Waiting);
+        }
+
+        [Fact]
+        public void Cancel_When_EventStartsLessThan4Hours_IncorrectUserEmail_Should_Fail()
+        {
+            var registration = GetRegistration();
+
+            var result = registration.Cancel(DateTimeOffset.UtcNow.AddHours(3), "other@other.com");
+
+            result.IsFailed.Should().BeTrue();
+            registration.State.Should().Be(RegistrationState.Waiting);
+        }
+
+        [Fact]
+        public void Cancel_When_EventStartsMoreThan4Hours_Should_Failt()
+        {
+            var registration = GetRegistration();
+
+            var result = registration.Cancel(DateTimeOffset.UtcNow.AddHours(5), Email);
+
+            result.IsSuccess.Should().BeTrue();
+            registration.State.Should().Be(RegistrationState.Canceled);
+        }
+
+        [Fact]
+        public void Cancel_When_EventStartsMoreThan4Hours_IncorrectUserEmail_Should_Fail()
+        {
+            var registration = GetRegistration();
+
+            var result = registration.Cancel(DateTimeOffset.UtcNow.AddHours(5), "other@other.com");
+
+            result.IsFailed.Should().BeTrue();
+            registration.State.Should().Be(RegistrationState.Waiting);
+        }
+
 
         public static string Id => Guid.NewGuid().ToString();
-        public static Attendee Attendee => new Attendee();
+        public static string Email => "test@test.com";
+        public static Attendee Attendee => new Attendee() { Email = Email };
 
         public RegistrationAggregate GetRegistration() => new RegistrationAggregate(Id, Attendee);
     }

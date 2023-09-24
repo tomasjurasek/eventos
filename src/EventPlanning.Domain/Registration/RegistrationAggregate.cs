@@ -51,5 +51,23 @@ namespace EventPlanning.Domain.Registration
             return Result.Ok();
         }
 
+
+        public Result Cancel(DateTimeOffset eventStartAt, string userEmail)
+        {
+            if (eventStartAt <= DateTimeOffset.UtcNow.AddHours(4))
+            {
+                return Result.Fail("Registration cannot be cancelled.");
+            }
+
+            else if (!Attendee.Email.Equals(userEmail, StringComparison.OrdinalIgnoreCase))
+            {
+                return Result.Fail("Registration can be canceled only by attendee.");
+            }
+
+            State = RegistrationState.Canceled;
+
+            return Result.Ok();
+        }
+
     }
 }
