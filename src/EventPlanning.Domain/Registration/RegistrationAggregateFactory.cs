@@ -4,11 +4,11 @@ namespace EventPlanning.Domain.Registration
 {
     internal class RegistrationAggregateFactory : IRegistrationAggregateFactory
     {
-        public Result<RegistrationAggregate> Create(string id, Attendee attendee)
+        public Result<RegistrationAggregate> Create(string id, string eventId, Attendee attendee)
         {
             try
             {
-                var registration = new RegistrationAggregate(id, attendee);
+                var registration = new RegistrationAggregate(id, eventId, attendee);
                 return Result.Ok(registration);
             }
             catch (Exception ex)
@@ -20,6 +20,6 @@ namespace EventPlanning.Domain.Registration
 
     public interface IRegistrationAggregateFactory
     {
-        Result<RegistrationAggregate> Create(string id, Attendee attendee);
+        Result<RegistrationAggregate> Create(string id, string eventId, Attendee attendee);
     }
 }

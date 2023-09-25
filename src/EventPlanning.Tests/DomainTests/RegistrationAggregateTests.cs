@@ -15,7 +15,7 @@ namespace EventPlanning.Tests.DomainTests
         [Fact]
         public void Create_When_CorrectData_Should_Success()
         {
-            var registration = _registrationAggregateFactory.Create(Id, Attendee);
+            var registration = _registrationAggregateFactory.Create(Id, EventId, Attendee);
 
             registration.IsSuccess.Should().BeTrue();
             registration.Value.Should().NotBeNull();
@@ -26,7 +26,17 @@ namespace EventPlanning.Tests.DomainTests
         [InlineData(null)]
         public void Create_When_InvalidId_Should_Fail(string id)
         {
-            var registration = _registrationAggregateFactory.Create(id, Attendee);
+            var registration = _registrationAggregateFactory.Create(id, EventId, Attendee);
+
+            registration.IsFailed.Should().BeTrue();
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void Create_When_InvalidEventId_Should_Fail(string eventId)
+        {
+            var registration = _registrationAggregateFactory.Create(Id, eventId, Attendee);
 
             registration.IsFailed.Should().BeTrue();
         }
@@ -34,7 +44,7 @@ namespace EventPlanning.Tests.DomainTests
         [Fact]
         public void Create_When_InvalidAttendee_Should_Fail()
         {
-            var registration = _registrationAggregateFactory.Create(Id, null);
+            var registration = _registrationAggregateFactory.Create(Id, EventId, null);
 
             registration.IsFailed.Should().BeTrue();
         }
@@ -141,9 +151,10 @@ namespace EventPlanning.Tests.DomainTests
 
 
         public static string Id => Guid.NewGuid().ToString();
+        public static string EventId => Guid.NewGuid().ToString();
         public static string Email => "test@test.com";
         public static Attendee Attendee => new Attendee() { Email = Email };
 
-        public RegistrationAggregate GetRegistration() => new RegistrationAggregate(Id, Attendee);
+        public RegistrationAggregate GetRegistration() => new RegistrationAggregate(Id, EventId, Attendee);
     }
 }

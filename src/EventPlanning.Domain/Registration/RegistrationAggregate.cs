@@ -6,15 +6,18 @@ namespace EventPlanning.Domain.Registration
 {
     public class RegistrationAggregate : IAggregate
     {
-        internal RegistrationAggregate(string id, Attendee attendee)
+        internal RegistrationAggregate(string id, string eventId, Attendee attendee)
         {
-            Id = Guard.Argument(id).NotNull().NotEmpty(); // Replace
+            Id = Guard.Argument(id).NotNull().NotEmpty();
             Attendee = Guard.Argument(attendee).NotNull();
+            EventId = Guard.Argument(eventId).NotNull().NotEmpty();
             CreatedAt = DateTimeOffset.UtcNow;
             State = RegistrationState.Waiting;
         }
 
         public string Id { get; }
+
+        public string EventId { get; }
 
         public DateTimeOffset CreatedAt { get; }
 
