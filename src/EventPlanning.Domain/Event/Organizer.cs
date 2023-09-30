@@ -2,5 +2,6 @@
 {
     public class Organizer
     {
+        public required string Email { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace EventPlanning.Domain.Common
 {
-    public interface IAggregate
+    public interface IAggregateRoot
     {
         public string Id { get; }
 

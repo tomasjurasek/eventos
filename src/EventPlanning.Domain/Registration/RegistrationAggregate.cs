@@ -4,7 +4,7 @@ using FluentResults;
 
 namespace EventPlanning.Domain.Registration
 {
-    public class RegistrationAggregate : IAggregate
+    public class RegistrationAggregate : IAggregateRoot
     {
         internal RegistrationAggregate(string id, string eventId, Attendee attendee)
         {
@@ -34,7 +34,7 @@ namespace EventPlanning.Domain.Registration
             }
             else
             {
-                return Result.Fail("Registration is not in a waiting state.");
+                return Result.Fail("REGISTRATION_IS_NOT_IN_WAITING_STATE");
             }
 
             return Result.Ok();
@@ -48,7 +48,7 @@ namespace EventPlanning.Domain.Registration
             }
             else
             {
-                return Result.Fail("Registration is not in a waiting state.");
+                return Result.Fail("REGISTRATION_IS_NOT_IN_WAITING_STATE");
             }
 
             return Result.Ok();
@@ -59,12 +59,12 @@ namespace EventPlanning.Domain.Registration
         {
             if (eventStartAt <= DateTimeOffset.UtcNow.AddHours(4))
             {
-                return Result.Fail("Registration cannot be cancelled.");
+                return Result.Fail("REGISTRATION_CANNOT_BE_CANCELED");
             }
 
             else if (!Attendee.Email.Equals(userEmail, StringComparison.OrdinalIgnoreCase))
             {
-                return Result.Fail("Registration can be canceled only by attendee.");
+                return Result.Fail("REGISTRATION_CAN_BE_CANCELED_ONLY_BY_ATTENDEE");
             }
 
             State = RegistrationState.Canceled;
