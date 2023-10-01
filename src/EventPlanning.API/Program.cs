@@ -1,8 +1,14 @@
 using EventPlanning.API.Mappers;
+using EventPlanning.Application.Extensions;
+using EventPlanning.Domain.Extensions;
+using EventPlanning.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// TODO Metrics
+// TODO Tracing
+// TODO Logging
+// TODO IDM
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -10,6 +16,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(CreateEventMapper));
 
+builder.Services.AddApplicationServices();
+builder.Services.AddDomainServices();
+builder.Services.AddInfrastructureServices();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
