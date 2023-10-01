@@ -12,7 +12,12 @@
   </ItemGroup>
 
     <ItemGroup>
-        <InternalsVisibleTo Include="EventPlanning.Tests"/>
+        <InternalsVisibleTo Include="EventPlanning.Tests" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Event\Events\" />
+      <Folder Include="Registration\Events\" />
     </ItemGroup>
 
 </Project>

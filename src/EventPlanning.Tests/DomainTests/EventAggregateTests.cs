@@ -16,7 +16,7 @@ namespace EventPlanning.Tests.DomainTests
         [Fact]
         public void Create_When_CorrectData_Should_Success()
         {
-            var @event = _eventAggregateFactory.Create(Id, Organizer, Address, Capacity);
+            var @event = _eventAggregateFactory.Create(Id, Name, Description, Organizer, Address, Capacity);
 
             @event.IsSuccess.Should().BeTrue();
             @event.Value.Should().NotBeNull();
@@ -27,7 +27,7 @@ namespace EventPlanning.Tests.DomainTests
         [InlineData(null)]
         public void Create_When_InvalidId_Should_Fail(string id)
         {
-            var @event = _eventAggregateFactory.Create(id, Organizer, Address, Capacity);
+            var @event = _eventAggregateFactory.Create(id, Name, Description, Organizer, Address, Capacity);
 
             @event.IsFailed.Should().BeTrue();
         }
@@ -35,7 +35,7 @@ namespace EventPlanning.Tests.DomainTests
         [Fact]
         public void Create_When_InvalidOrganizer_Should_Fail()
         {
-            var @event = _eventAggregateFactory.Create(Id, null, Address, Capacity);
+            var @event = _eventAggregateFactory.Create(Id, Name, Description, null, Address, Capacity);
 
             @event.IsFailed.Should().BeTrue();
         }
@@ -44,7 +44,7 @@ namespace EventPlanning.Tests.DomainTests
         [Fact]
         public void Create_When_InvalidAddress_Should_Fail()
         {
-            var @event = _eventAggregateFactory.Create(Id, Organizer, null, Capacity);
+            var @event = _eventAggregateFactory.Create(Id, Name, Description, Organizer, null, Capacity);
 
             @event.IsFailed.Should().BeTrue();
         }
@@ -54,7 +54,27 @@ namespace EventPlanning.Tests.DomainTests
         [InlineData(-1)]
         public void Create_When_InvalidCapacity_Should_Fail(int capacity)
         {
-            var @event = _eventAggregateFactory.Create(Id, Organizer, Address, capacity);
+            var @event = _eventAggregateFactory.Create(Id, Name, Description, Organizer, Address, capacity);
+
+            @event.IsFailed.Should().BeTrue();
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void Create_When_InvalidName_Should_Fail(string name)
+        {
+            var @event = _eventAggregateFactory.Create(Id, name, Description, Organizer, Address, Capacity);
+
+            @event.IsFailed.Should().BeTrue();
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void Create_When_InvalidDescription_Should_Fail(string description)
+        {
+            var @event = _eventAggregateFactory.Create(Id, Name, description, Organizer, Address, Capacity);
 
             @event.IsFailed.Should().BeTrue();
         }
@@ -85,10 +105,12 @@ namespace EventPlanning.Tests.DomainTests
 
         public static string Id => Guid.NewGuid().ToString();
         public static string Email => "test@test.com";
+        public static string Name => "Event";
+        public static string Description => "Event Info";
         public static int Capacity => 3;
         public static Organizer Organizer => new Organizer() { Email = Email };
         public static Address Address => new Address() { City = "Brno", PostalCode = "54345", State = "Czech", Street = "Nova", StreetNo = "1" };
 
-        public EventAggregate GetRegistration() => new EventAggregate(Id, Organizer, Address, Capacity);
+        public EventAggregate GetRegistration() => new EventAggregate(Id, Name, Description, Organizer, Address, Capacity);
     }
 }

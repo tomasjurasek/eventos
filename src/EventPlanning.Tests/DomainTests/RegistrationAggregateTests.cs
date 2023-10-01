@@ -44,7 +44,7 @@ namespace EventPlanning.Tests.DomainTests
         [Fact]
         public void Create_When_InvalidAttendee_Should_Fail()
         {
-            var registration = _registrationAggregateFactory.Create(Id, EventId, null);
+            var registration = _registrationAggregateFactory.Create(Id, EventId, null!);
 
             registration.IsFailed.Should().BeTrue();
         }
