@@ -6,6 +6,7 @@ namespace EventPlanning.Domain.Extensions
 {
     public static class ServiceCollectionExtensions
     {
+        // TODO
         public static IServiceCollection AddDomainServices(this IServiceCollection services)
         {
             return services.AddSingleton<IRegistrationAggregateFactory, RegistrationAggregateFactory>()

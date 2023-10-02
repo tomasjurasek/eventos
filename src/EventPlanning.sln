@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventPlanning.Application",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventPlanning.Infrastructure", "EventPlanning.Infrastructure\EventPlanning.Infrastructure.csproj", "{AAFAEBCF-6491-4FBE-897C-0B58EDC8E022}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventPlanning.Tests", "EventPlanning.Tests\EventPlanning.Tests.csproj", "{C38BCAD7-EFFD-4382-BFA0-76EB53B1B19D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventPlanning.Tests", "EventPlanning.Tests\EventPlanning.Tests.csproj", "{C38BCAD7-EFFD-4382-BFA0-76EB53B1B19D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventPlanning.Domain.Events", "EventPlanning.Domain.Events\EventPlanning.Domain.Events.csproj", "{63B2C5D7-84A1-4DAF-8D01-FDB8B9600972}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{C38BCAD7-EFFD-4382-BFA0-76EB53B1B19D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C38BCAD7-EFFD-4382-BFA0-76EB53B1B19D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C38BCAD7-EFFD-4382-BFA0-76EB53B1B19D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63B2C5D7-84A1-4DAF-8D01-FDB8B9600972}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63B2C5D7-84A1-4DAF-8D01-FDB8B9600972}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63B2C5D7-84A1-4DAF-8D01-FDB8B9600972}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63B2C5D7-84A1-4DAF-8D01-FDB8B9600972}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
