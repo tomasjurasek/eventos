@@ -1,6 +1,7 @@
 using AutoMapper;
 using EventPlanning.API.Requests.CreateEvent;
 using EventPlanning.Application.Commands.CreateEvent;
+using FluentResults;
 using MassTransit.Mediator;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,9 +23,17 @@ namespace EventPlanning.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateEvent(CreateEventRequest createEventRequest)
         {
-            // TODO Result
-            await _mediator.Send(_mapper.Map<CreateEventCommand>(createEventRequest));
-            return Ok();
+            var client = _mediator.CreateRequestClient<CreateEventCommand>();
+
+            var result = await client.GetResponse<Result>(_mapper.Map<CreateEventCommand>(createEventRequest));
+            if (result.Message.IsSuccess)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Message.Errors);
+            }
         }
     }
 }

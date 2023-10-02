@@ -1,9 +1,10 @@
 ﻿using EventPlanning.Domain.Event;
+using FluentResults;
 using MassTransit;
 
 namespace EventPlanning.Application.Commands.CreateEvent
 {
-    internal class CreateEventCommandHandler : IConsumer<CreateEventCommand>
+    internal class CreateEventCommandHandler : CommandHandlerBase<CreateEventCommand>
     {
         private readonly IEventAggregateFactory _eventAggregateFactory;
         private readonly IEventRepository _eventRepository;
@@ -14,7 +15,7 @@ namespace EventPlanning.Application.Commands.CreateEvent
             _eventRepository = eventRepository;
         }
 
-        public async Task Consume(ConsumeContext<CreateEventCommand> context)
+        protected override async Task<Result> HandleAsync(ConsumeContext<CreateEventCommand> context)
         {
             // TODO Response 
             // TODO Metrics
@@ -24,12 +25,14 @@ namespace EventPlanning.Application.Commands.CreateEvent
 
             if (result.IsFailed)
             {
-
+                return Result.Fail(result.Errors);
             }
             else
             {
                 await _eventRepository.StoreAsync(result.Value);
             }
+
+            return Result.Ok();
         }
     }
 }
