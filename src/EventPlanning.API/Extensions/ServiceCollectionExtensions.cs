@@ -13,14 +13,14 @@ namespace EventPlanning.API.Extensions
             Sdk.SetDefaultTextMapPropagator(new TraceContextPropagator());
 
             services.AddOpenTelemetry()
-                            .WithTracing(builder =>
-                            {
-                                builder.SetResourceBuilder(ResourceBuilder.CreateDefault()
-                                    .AddService("event-planning"))
-                                    .AddAspNetCoreInstrumentation()
-                                    .AddHttpClientInstrumentation()
-                                    .AddConsoleExporter();
-                            });
+                .WithTracing(builder =>
+                    {
+                        builder.SetResourceBuilder(ResourceBuilder.CreateDefault()
+                                .AddService("event-planning"))
+                            .AddAspNetCoreInstrumentation()
+                            .AddHttpClientInstrumentation()
+                            .AddConsoleExporter();
+                    });
 
 
             // TODO AddHeaderPropagation
