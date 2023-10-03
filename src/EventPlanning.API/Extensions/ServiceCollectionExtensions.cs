@@ -1,5 +1,6 @@
 ﻿using OpenTelemetry;
 using OpenTelemetry.Context.Propagation;
+using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
@@ -23,6 +24,24 @@ namespace EventPlanning.API.Extensions
 
 
             // TODO AddHeaderPropagation
+
+            return services;
+        }
+
+        public static IServiceCollection AddMetrics(this IServiceCollection services)
+        {
+            // TODO singleton Meter
+
+            services.AddOpenTelemetry()
+                .WithMetrics(builder =>
+                {
+                    builder.SetResourceBuilder(ResourceBuilder.CreateDefault()
+                            .AddService("event-planning"))
+                        .AddMeter("*")
+                        .AddConsoleExporter()
+                        .AddAspNetCoreInstrumentation()
+                        .AddHttpClientInstrumentation();
+                });
 
             return services;
         }
