@@ -8,7 +8,7 @@ namespace EventPlanning.API.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddDistributedTracing(this IServiceCollection services)
+        public static IServiceCollection AddTracing(this IServiceCollection services)
         {
             Sdk.SetDefaultTextMapPropagator(new TraceContextPropagator());
 
