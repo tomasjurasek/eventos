@@ -28,6 +28,8 @@ builder.Services.AddLogging();
 builder.Services.AddHttpLogging(config =>
 {
     config.LoggingFields = Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.All;
+    config.RequestBodyLogLimit = 4096;
+    config.ResponseBodyLogLimit = 4096;
 });
 
 var app = builder.Build();
