@@ -6,8 +6,7 @@ using EventPlanning.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// TODO Metrics
-// TODO Logging
+// TODO HealthChecks
 // TODO IDM
 
 builder.Services.AddControllers();
@@ -21,9 +20,15 @@ builder.Services.AddDomainServices();
 builder.Services.AddInfrastructureServices();
 
 // OpenTelemetry Tracing
-builder.Services.AddDistributedTracing();
+builder.Services.AddTracing();
+builder.Services.AddMetrics();
 
+builder.Services.AddLogging();
 
+builder.Services.AddHttpLogging(config =>
+{
+    config.LoggingFields = Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.All;
+});
 
 var app = builder.Build();
 
@@ -33,6 +38,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseHttpLogging();
 
 app.UseHttpsRedirection();
 
