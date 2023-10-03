@@ -1,3 +1,4 @@
+using EventPlanning.API.Extensions;
 using EventPlanning.API.Mappers;
 using EventPlanning.Application.Extensions;
 using EventPlanning.Domain.Extensions;
@@ -6,7 +7,6 @@ using EventPlanning.Infrastructure.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // TODO Metrics
-// TODO Tracing
 // TODO Logging
 // TODO IDM
 
@@ -19,6 +19,12 @@ builder.Services.AddAutoMapper(typeof(CreateEventMapper));
 builder.Services.AddApplicationServices();
 builder.Services.AddDomainServices();
 builder.Services.AddInfrastructureServices();
+
+// OpenTelemetry Tracing
+builder.Services.AddDistributedTracing();
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
