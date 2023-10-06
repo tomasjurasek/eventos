@@ -1,4 +1,4 @@
-﻿namespace EventPlanning.Domain.Event.Events
+﻿namespace EventPlanning.Domain.Common
 {
     public interface IDomainEvent
     {
