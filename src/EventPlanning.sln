@@ -15,6 +15,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventPlanning.Domain", "Eve
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventPlanning.Application", "EventPlanning\EventPlanning.Application\EventPlanning.Application.csproj", "{F298B0EB-0074-4E71-8B89-62763E8109F1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventPlanning.ReadModel", "EventPlanning.ReadModel", "{03686EF0-EA00-4E0E-B4D1-A34F13EEC081}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventPlanning.ProcessManager", "EventPlanning.ProcessManager", "{E62CDE16-CA61-4AB6-B965-9138FE4BBFA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventPlanning.ReadModel.API", "EventPlanning.ReadModel\EventPlanning.ReadModel.API\EventPlanning.ReadModel.API.csproj", "{E151E8FB-C292-4AAD-9E67-C29338D0F772}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventPlanning.ReadModel.Application", "EventPlanning.ReadModel\EventPlanning.ReadModel.Application\EventPlanning.ReadModel.Application.csproj", "{E2C3B059-3627-4F56-8025-7E6BB77D88E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +49,14 @@ Global
 		{F298B0EB-0074-4E71-8B89-62763E8109F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F298B0EB-0074-4E71-8B89-62763E8109F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F298B0EB-0074-4E71-8B89-62763E8109F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E151E8FB-C292-4AAD-9E67-C29338D0F772}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E151E8FB-C292-4AAD-9E67-C29338D0F772}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E151E8FB-C292-4AAD-9E67-C29338D0F772}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E151E8FB-C292-4AAD-9E67-C29338D0F772}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2C3B059-3627-4F56-8025-7E6BB77D88E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2C3B059-3627-4F56-8025-7E6BB77D88E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2C3B059-3627-4F56-8025-7E6BB77D88E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2C3B059-3627-4F56-8025-7E6BB77D88E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,6 +67,8 @@ Global
 		{751BEA15-99F2-4D23-AB57-F03F6F4018B0} = {D673EEBB-0FCF-48B2-8384-79927A49FD0A}
 		{63FC8A46-5B1B-41FF-9FC9-B2361D0A34BA} = {D673EEBB-0FCF-48B2-8384-79927A49FD0A}
 		{F298B0EB-0074-4E71-8B89-62763E8109F1} = {D673EEBB-0FCF-48B2-8384-79927A49FD0A}
+		{E151E8FB-C292-4AAD-9E67-C29338D0F772} = {03686EF0-EA00-4E0E-B4D1-A34F13EEC081}
+		{E2C3B059-3627-4F56-8025-7E6BB77D88E4} = {03686EF0-EA00-4E0E-B4D1-A34F13EEC081}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {804BF014-1E9F-4CFF-A317-5CF9458EA8CF}
