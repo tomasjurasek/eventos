@@ -4,21 +4,17 @@ using FluentResults;
 
 namespace EventPlanning.Domain.Event
 {
-    public class EventAggregate : IAggregateRoot
+    public class EventAggregate : AggregateRoot
     {
-        internal EventAggregate(string id, string name, string description, Organizer organizer, Address address, int capacity)
+        internal EventAggregate(string id, string name, string description, Organizer organizer, Address address, int capacity) : base(id, DateTimeOffset.UtcNow)
         {
-            Id = Guard.Argument(id).NotNull().NotEmpty();
             Capacity = Guard.Argument(capacity).NotZero().NotNegative();
             Address = Guard.Argument(address).NotNull();
             Name = Guard.Argument(name).NotNull().NotEmpty().MaxLength(20);
             Description = Guard.Argument(description).NotNull().NotEmpty().MaxLength(100);
             Organizer = Guard.Argument(organizer).NotNull();
-            CreatedAt = DateTimeOffset.UtcNow;
             State = EventState.Created;
         }
-
-        public string Id { get; }
 
         public int Capacity { get; private set; }
 
@@ -29,8 +25,6 @@ namespace EventPlanning.Domain.Event
         public string Name { get; private set; }
 
         public string Description { get; private set; }
-
-        public DateTimeOffset CreatedAt { get; }
 
         public Organizer Organizer { get; private set; }
 

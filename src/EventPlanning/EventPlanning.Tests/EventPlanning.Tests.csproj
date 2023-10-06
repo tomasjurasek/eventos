@@ -27,4 +27,8 @@
     <ProjectReference Include="..\EventPlanning.Domain\EventPlanning.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Compontents\" />
+  </ItemGroup>
+
 </Project>

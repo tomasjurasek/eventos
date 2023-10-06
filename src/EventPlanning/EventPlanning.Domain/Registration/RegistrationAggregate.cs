@@ -4,22 +4,16 @@ using FluentResults;
 
 namespace EventPlanning.Domain.Registration
 {
-    public class RegistrationAggregate : IAggregateRoot
+    public class RegistrationAggregate : AggregateRoot
     {
-        internal RegistrationAggregate(string id, string eventId, Attendee attendee)
+        internal RegistrationAggregate(string id, string eventId, Attendee attendee) : base(id, DateTimeOffset.UtcNow)
         {
-            Id = Guard.Argument(id).NotNull().NotEmpty();
             Attendee = Guard.Argument(attendee).NotNull();
             EventId = Guard.Argument(eventId).NotNull().NotEmpty();
-            CreatedAt = DateTimeOffset.UtcNow;
             State = RegistrationState.Waiting;
         }
 
-        public string Id { get; }
-
         public string EventId { get; }
-
-        public DateTimeOffset CreatedAt { get; }
 
         public Attendee Attendee { get; private set; }
 
