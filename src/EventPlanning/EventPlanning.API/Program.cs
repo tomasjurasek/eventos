@@ -1,5 +1,4 @@
 using EventPlanning.API.Extensions;
-using EventPlanning.API.Mappers;
 using EventPlanning.Application.Extensions;
 using EventPlanning.Domain.Extensions;
 using EventPlanning.Infrastructure.Extensions;
@@ -13,7 +12,6 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddAutoMapper(typeof(CreateEventMapper));
 
 builder.Services.AddApplicationServices();
 builder.Services.AddDomainServices();

@@ -1,6 +1,4 @@
-﻿using OpenTelemetry;
-using OpenTelemetry.Context.Propagation;
-using OpenTelemetry.Metrics;
+﻿using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
@@ -10,7 +8,6 @@ namespace EventPlanning.API.Extensions
     {
         public static IServiceCollection AddTracing(this IServiceCollection services)
         {
-            Sdk.SetDefaultTextMapPropagator(new TraceContextPropagator());
 
             services.AddOpenTelemetry()
                 .WithTracing(builder =>
@@ -21,9 +18,6 @@ namespace EventPlanning.API.Extensions
                             .AddHttpClientInstrumentation()
                             .AddConsoleExporter();
                     });
-
-
-            // TODO AddHeaderPropagation
 
             return services;
         }
@@ -44,6 +38,7 @@ namespace EventPlanning.API.Extensions
                 });
 
             return services;
+
         }
     }
 }
