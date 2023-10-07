@@ -1,6 +1,7 @@
 ﻿using EventPlanning.Domain.Common;
 using EventPlanning.Infrastructure.Options;
 using EventStore.Client;
+using FluentResults;
 using Microsoft.Extensions.Options;
 using System.Text;
 using System.Text.Json;
@@ -32,31 +33,31 @@ namespace EventPlanning.Infrastructure.Stores
             return parsedEvents;
         }
 
-        public async Task StoreAsync(Guid streamId, int streamLastVersion, ICollection<IDomainEvent> events)
+        public async Task<Result> StoreAsync(Guid streamId, int streamLastVersion, ICollection<IDomainEvent> events)
         {
             var streamResult = _store.ReadStreamAsync(Direction.Forwards, streamId.ToString(), StreamPosition.End, 1);
             var lastEvent = await streamResult.LastAsync();
 
             if (lastEvent.Event.EventNumber.ToInt64() > streamLastVersion)
             {
-                throw new InvalidOperationException("TODO"); // TODO Result or Exception ??
+                return Result.Fail("TODO ERROR");
             }
-            else
-            {
-                var eventData = events
-                 .Select(s =>
-                  new EventData(Uuid.FromGuid(streamId), s.GetType().Name,
-                  new ReadOnlyMemory<byte>(JsonSerializer.SerializeToUtf8Bytes(s, s.GetType()))));
+            var eventData = events
+             .Select(s =>
+              new EventData(Uuid.FromGuid(streamId), s.GetType().Name,
+              new ReadOnlyMemory<byte>(JsonSerializer.SerializeToUtf8Bytes(s, s.GetType()))));
 
 
-                await _store.AppendToStreamAsync(streamId.ToString(), StreamState.Any, eventData);
-            }
+            await _store.AppendToStreamAsync(streamId.ToString(), StreamState.Any, eventData);
+
+
+            return Result.Ok();
         }
     }
 
     public interface IEventStore
     {
-        Task StoreAsync(Guid streamId, int streamLastVersion, ICollection<IDomainEvent> events);
+        Task<Result> StoreAsync(Guid streamId, int streamLastVersion, ICollection<IDomainEvent> events);
         Task<ICollection<IDomainEvent>> ReadAsync(Guid streamId);
     }
 }
