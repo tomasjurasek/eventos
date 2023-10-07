@@ -12,6 +12,8 @@
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="6.12.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+    <PackageReference Include="Testcontainers" Version="3.5.0" />
+    <PackageReference Include="Testcontainers.EventStoreDb" Version="3.5.0" />
     <PackageReference Include="xunit" Version="2.4.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -25,10 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EventPlanning.Domain\EventPlanning.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Compontents\" />
+    <ProjectReference Include="..\EventPlanning.Infrastructure\EventPlanning.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

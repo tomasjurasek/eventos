@@ -1,18 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="EventStore.Client.Grpc.Streams" Version="23.1.0" />
-    <PackageReference Include="MassTransit" Version="8.1.1" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="EventStore.Client.Grpc.Streams" Version="23.1.0" />
+        <PackageReference Include="MassTransit" Version="8.1.1" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\EventPlanning.Domain\EventPlanning.Domain.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\EventPlanning.Domain\EventPlanning.Domain.csproj" />
+        <InternalsVisibleTo  Include="EventPlanning.Tests"/>
+    </ItemGroup>
 
 </Project>
