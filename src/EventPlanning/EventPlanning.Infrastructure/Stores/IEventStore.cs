@@ -19,6 +19,7 @@ namespace EventPlanning.Infrastructure.Stores
 
         public async Task<ICollection<IDomainEvent>> ReadAsync(Guid streamId)
         {
+            // TODO StreamNotFound
             var events = await _store
             .ReadStreamAsync(
                 Direction.Forwards,

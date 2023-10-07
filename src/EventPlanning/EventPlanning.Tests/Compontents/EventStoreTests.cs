@@ -1,30 +1,26 @@
-﻿using Testcontainers.EventStoreDb;
+﻿using Microsoft.Extensions.Options;
+using Testcontainers.EventStoreDb;
 
 namespace EventPlanning.Tests.Compontents
 {
     public class EventStoreTests
     {
-        private readonly EventStoreDbContainer _eventStoreDbContainer;
         private readonly Infrastructure.Stores.EventStore _eventStore;
         public EventStoreTests()
         {
+            var container = new EventStoreDbBuilder().Build();
+            container.StartAsync().Wait();
 
-
-            //_eventStore = new Infrastructure.Stores.EventStore(Options.Create(new Infrastructure.Options.EventStoreOptions
-            //{
-            //    ConnectionString = ""
-            //}));
+            _eventStore = new Infrastructure.Stores.EventStore(Options.Create(new Infrastructure.Options.EventStoreOptions
+            {
+                ConnectionString = container.GetConnectionString()
+            }));
         }
 
         [Fact]
         public async Task Test()
         {
-            var eventStoreDbContainer = new EventStoreDbBuilder()
-                .WithImage("eventstore/eventstore:21.2.0-buster-slim")
-                .WithName("aaa").Build();
-
-
-            await eventStoreDbContainer.StartAsync();
+            var events = await _eventStore.ReadAsync(Guid.NewGuid());
         }
     }
 }
