@@ -1,4 +1,6 @@
-﻿using FluentAssertions;
+﻿using EventPlanning.Domain.Common;
+using EventPlanning.Domain.Event.Events;
+using FluentAssertions;
 using Microsoft.Extensions.Options;
 using Testcontainers.EventStoreDb;
 
@@ -26,6 +28,23 @@ namespace EventPlanning.Tests.Compontents
             var events = await _eventStore.ReadAsync(streamId);
 
             events.Should().BeEmpty();
+        }
+
+        [Fact(Skip ="TODO")]
+        public async Task StoreAsync_When_ConcurrencyStreamVersionIsSame_Should_Fail()
+        {
+            var streamId = Guid.NewGuid();
+            var events = new List<IDomainEvent> // TODO
+            { 
+                new EventCreated(){ Address = default, Description = default, FinishedAt= default, Name = default, Organizer = default, StartedAt= default}
+            };
+
+            var firstResult = await _eventStore.StoreAsync(streamId, 1, events);
+
+            var secondResult  = await _eventStore.StoreAsync(streamId, 1, events);
+
+            firstResult.IsSuccess.Should().BeTrue();
+            secondResult.IsFailed.Should().BeTrue();
         }
     }
 }
