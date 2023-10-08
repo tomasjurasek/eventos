@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using FluentAssertions;
+using Microsoft.Extensions.Options;
 using Testcontainers.EventStoreDb;
 
 namespace EventPlanning.Tests.Compontents
@@ -9,7 +10,7 @@ namespace EventPlanning.Tests.Compontents
         public EventStoreTests()
         {
             var container = new EventStoreDbBuilder().Build();
-            container.StartAsync().Wait();
+            container.StartAsync().Wait(); // IAsyncLifetime or some Init
 
             _eventStore = new Infrastructure.Stores.EventStore(Options.Create(new Infrastructure.Options.EventStoreOptions
             {
@@ -18,9 +19,13 @@ namespace EventPlanning.Tests.Compontents
         }
 
         [Fact]
-        public async Task Test()
+        public async Task ReadAsync_When_StreamIdDoesntExist_Should_Success_EmptyEvents()
         {
-            var events = await _eventStore.ReadAsync(Guid.NewGuid());
+            var streamId = Guid.NewGuid();
+
+            var events = await _eventStore.ReadAsync(streamId);
+
+            events.Should().BeEmpty();
         }
     }
 }

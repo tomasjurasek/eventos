@@ -19,19 +19,27 @@ namespace EventPlanning.Infrastructure.Stores
 
         public async Task<ICollection<IDomainEvent>> ReadAsync(Guid streamId)
         {
-            // TODO StreamNotFound
-            var events = await _store
-            .ReadStreamAsync(
-                Direction.Forwards,
-                streamId.ToString(),
-                StreamPosition.Start)
-            .ToListAsync();
+            try
+            {
+                var events = await _store
+                    .ReadStreamAsync(Direction.Forwards, streamId.ToString(), StreamPosition.Start)
+                    .ToListAsync();
 
-            var parsedEvents = events
-                .Select(s => JsonSerializer.Deserialize<IDomainEvent>(Encoding.UTF8.GetString(s.Event.Data.ToArray()))) // TODO Deserialize
-                .ToList();
+                var parsedEvents = events
+                    .Select(s => JsonSerializer.Deserialize<IDomainEvent>(Encoding.UTF8.GetString(s.Event.Data.ToArray()))) // TODO Deserialize
+                    .ToList();
 
-            return parsedEvents;
+                if (parsedEvents is null)
+                {
+                    return new List<IDomainEvent>();
+                }
+
+                return parsedEvents!;
+            }
+            catch (StreamNotFoundException)
+            {
+                return new List<IDomainEvent>();
+            }
         }
 
         public async Task<Result> StoreAsync(Guid streamId, int streamLastVersion, ICollection<IDomainEvent> events)
