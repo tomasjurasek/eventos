@@ -57,8 +57,7 @@ namespace EventPlanning.Infrastructure.Stores
                 }
                 var eventData = events
                  .Select(s =>
-                  new EventData(Uuid.FromGuid(streamId), s.GetType().Name,
-                  new ReadOnlyMemory<byte>(JsonSerializer.SerializeToUtf8Bytes(s, s.GetType()))));
+                  new EventData(Uuid.FromGuid(streamId), s.GetType().Name, JsonSerializer.SerializeToUtf8Bytes(s, s.GetType()).AsMemory()));
 
 
                 await _store.AppendToStreamAsync(streamId.ToString(), StreamState.Any, eventData);
