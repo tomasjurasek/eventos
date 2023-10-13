@@ -4,7 +4,7 @@ namespace EventPlanning.Domain.Registration
 {
     internal class RegistrationAggregateFactory : IRegistrationAggregateFactory
     {
-        public Result<RegistrationAggregate> Create(string id, string eventId, Attendee attendee)
+        public Result<RegistrationAggregate> Create(Guid id, string eventId, Attendee attendee)
         {
             try
             {
@@ -20,6 +20,6 @@ namespace EventPlanning.Domain.Registration
 
     public interface IRegistrationAggregateFactory
     {
-        Result<RegistrationAggregate> Create(string id, string eventId, Attendee attendee);
+        Result<RegistrationAggregate> Create(Guid id, string eventId, Attendee attendee);
     }
 }

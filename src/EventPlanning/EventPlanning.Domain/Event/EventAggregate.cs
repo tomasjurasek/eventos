@@ -6,7 +6,10 @@ namespace EventPlanning.Domain.Event
 {
     public class EventAggregate : AggregateRoot
     {
-        internal EventAggregate(string id, string name, string description, Organizer organizer, Address address, int capacity) : base(id, DateTimeOffset.UtcNow)
+        // TODO
+        internal EventAggregate(IEnumerable<IDomainEvent> events) : base(events) { }
+
+        internal EventAggregate(Guid id, string name, string description, Organizer organizer, Address address, int capacity) : base(id, DateTimeOffset.UtcNow)
         {
             Capacity = Guard.Argument(capacity).NotZero().NotNegative();
             Address = Guard.Argument(address).NotNull();

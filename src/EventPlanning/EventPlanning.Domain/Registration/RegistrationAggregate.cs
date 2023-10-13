@@ -6,7 +6,7 @@ namespace EventPlanning.Domain.Registration
 {
     public class RegistrationAggregate : AggregateRoot
     {
-        internal RegistrationAggregate(string id, string eventId, Attendee attendee) : base(id, DateTimeOffset.UtcNow)
+        internal RegistrationAggregate(Guid id, string eventId, Attendee attendee) : base(id, DateTimeOffset.UtcNow)
         {
             Attendee = Guard.Argument(attendee).NotNull();
             EventId = Guard.Argument(eventId).NotNull().NotEmpty();

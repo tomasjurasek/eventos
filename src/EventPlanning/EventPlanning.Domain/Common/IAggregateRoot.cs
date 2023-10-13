@@ -2,7 +2,7 @@
 {
     public interface IAggregateRoot
     {
-        public string Id { get; }
+        public Guid Id { get; }
 
         public DateTimeOffset CreatedAt { get; }
 

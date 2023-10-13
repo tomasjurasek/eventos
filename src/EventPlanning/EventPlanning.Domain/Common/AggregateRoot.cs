@@ -12,13 +12,13 @@ namespace EventPlanning.Domain.Common
             }
         }
 
-        protected AggregateRoot(string id, DateTimeOffset createdAt)
+        protected AggregateRoot(Guid id, DateTimeOffset createdAt)
         {
-            Id = Guard.Argument(id).NotNull().NotEmpty();
+            Id = Guard.Argument(id).NotDefault();
             CreatedAt = createdAt;
         }
 
-        public string Id { get; protected set; }
+        public Guid Id { get; protected set; }
 
         public int Version { get; private set; }
 

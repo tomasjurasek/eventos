@@ -6,10 +6,10 @@ namespace EventPlanning.Domain.Event
     {
         public Result<EventAggregate> Create(string name, string description, Organizer organizer, Address address, int capacity)
         {
-            return Create(Guid.NewGuid().ToString(), name, description, organizer, address, capacity);
+            return Create(Guid.NewGuid(), name, description, organizer, address, capacity);
         }
 
-        public Result<EventAggregate> Create(string id, string name, string description, Organizer organizer, Address address, int capacity)
+        public Result<EventAggregate> Create(Guid id, string name, string description, Organizer organizer, Address address, int capacity)
         {
             try
             {
@@ -27,6 +27,6 @@ namespace EventPlanning.Domain.Event
     public interface IEventAggregateFactory
     {
         Result<EventAggregate> Create(string name, string description, Organizer organizer, Address address, int capacity);
-        Result<EventAggregate> Create(string id, string name, string description, Organizer organizer, Address address, int capacity); // TODO
+        Result<EventAggregate> Create(Guid id, string name, string description, Organizer organizer, Address address, int capacity); // TODO
     }
 }

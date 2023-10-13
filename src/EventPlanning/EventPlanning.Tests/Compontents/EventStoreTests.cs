@@ -40,7 +40,6 @@ namespace EventPlanning.Tests.Compontents
             };
 
             var firstResult = await _eventStore.StoreAsync(streamId, 1, events);
-
             var secondResult  = await _eventStore.StoreAsync(streamId, 1, events);
 
             firstResult.IsSuccess.Should().BeTrue();

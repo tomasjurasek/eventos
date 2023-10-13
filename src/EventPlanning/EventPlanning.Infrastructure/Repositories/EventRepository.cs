@@ -1,30 +1,34 @@
 ﻿using EventPlanning.Domain.Event;
-using EventPlanning.Infrastructure.Options;
-using EventStore.Client;
-using Microsoft.Extensions.Options;
+using EventPlanning.Infrastructure.Stores;
+using FluentResults;
 
 namespace EventPlanning.Infrastructure.Repositories
 {
     internal class EventRepository : IEventRepository
     {
-        private EventStoreClient _store;
+        private readonly IEventStore _eventStore;
 
-        public EventRepository(IOptions<EventStoreOptions> eventStoreOptions)
+        public EventRepository(IEventStore eventStore)
         {
-            _store = new EventStoreClient(EventStoreClientSettings.Create(eventStoreOptions.Value.ConnectionString));
+            _eventStore = eventStore;
         }
 
-        public Task<EventAggregate> FindAsync(string Id)
+        public async Task<Result<EventAggregate>> FindAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var events = await _eventStore.ReadAsync(id);
+
+            if (events is not null & events!.Any())
+            {
+                var @event = new EventAggregate(events!); // TODO Factory?
+                return Result.Ok(@event);
+            }
+
+            return Result.Fail("NO_AGGREGATE");
         }
 
-        public Task StoreAsync(EventAggregate @event)
+        public async Task<Result> StoreAsync(EventAggregate @event)
         {
-            // Check Concurrency - version
-            // Store
-
-            throw new NotImplementedException();
+            return await _eventStore.StoreAsync(@event.Id, @event.Version, @event.UncommitedEvents.ToList());
         }
     }
 }

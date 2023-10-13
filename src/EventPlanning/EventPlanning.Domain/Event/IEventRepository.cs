@@ -1,8 +1,10 @@
-﻿namespace EventPlanning.Domain.Event
+﻿using FluentResults;
+
+namespace EventPlanning.Domain.Event
 {
     public interface IEventRepository
     {
-        Task<EventAggregate> FindAsync(string Id);
-        Task StoreAsync(EventAggregate @event);
+        Task<Result<EventAggregate>> FindAsync(Guid Id);
+        Task<Result> StoreAsync(EventAggregate @event);
     }
 }

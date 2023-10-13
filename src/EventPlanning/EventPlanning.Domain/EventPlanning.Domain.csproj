@@ -14,6 +14,7 @@
 
     <ItemGroup>
         <InternalsVisibleTo Include="EventPlanning.Tests" />
+        <InternalsVisibleTo  Include="EventPlanning.Infrastructure"/>
     </ItemGroup>
 
 </Project>
