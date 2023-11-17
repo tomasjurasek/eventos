@@ -1,17 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <IsAspireHost>true</IsAspireHost>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MassTransit" Version="8.1.1" />
+    <PackageReference Include="Aspire.Hosting" Version="8.0.0-preview.1.23557.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EventPlanning.Domain\EventPlanning.Domain.csproj" />
+    <ProjectReference Include="..\EventPlanning\EventPlanning.API\EventPlanning.API.csproj" />
   </ItemGroup>
 
 </Project>

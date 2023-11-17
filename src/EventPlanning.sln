@@ -19,9 +19,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventPlanning.ReadModel", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventPlanning.ProcessManager", "EventPlanning.ProcessManager", "{E62CDE16-CA61-4AB6-B965-9138FE4BBFA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventPlanning.ReadModel.API", "EventPlanning.ReadModel\EventPlanning.ReadModel.API\EventPlanning.ReadModel.API.csproj", "{E151E8FB-C292-4AAD-9E67-C29338D0F772}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventPlanning.ReadModel.API", "EventPlanning.ReadModel\EventPlanning.ReadModel.API\EventPlanning.ReadModel.API.csproj", "{E151E8FB-C292-4AAD-9E67-C29338D0F772}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventPlanning.ReadModel.Application", "EventPlanning.ReadModel\EventPlanning.ReadModel.Application\EventPlanning.ReadModel.Application.csproj", "{E2C3B059-3627-4F56-8025-7E6BB77D88E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventPlanning.ReadModel.Application", "EventPlanning.ReadModel\EventPlanning.ReadModel.Application\EventPlanning.ReadModel.Application.csproj", "{E2C3B059-3627-4F56-8025-7E6BB77D88E4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventPlanning.AppHost", "EventPlanning.AppHost\EventPlanning.AppHost.csproj", "{08DC4357-E1CA-46C2-BF95-F4DB7EB6534D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventPlanning.ServiceDefaults", "EventPlanning.ServiceDefaults\EventPlanning.ServiceDefaults.csproj", "{C43D770D-6CB2-4013-8152-4A6A73486645}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +61,14 @@ Global
 		{E2C3B059-3627-4F56-8025-7E6BB77D88E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2C3B059-3627-4F56-8025-7E6BB77D88E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2C3B059-3627-4F56-8025-7E6BB77D88E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08DC4357-E1CA-46C2-BF95-F4DB7EB6534D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08DC4357-E1CA-46C2-BF95-F4DB7EB6534D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08DC4357-E1CA-46C2-BF95-F4DB7EB6534D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08DC4357-E1CA-46C2-BF95-F4DB7EB6534D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C43D770D-6CB2-4013-8152-4A6A73486645}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C43D770D-6CB2-4013-8152-4A6A73486645}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C43D770D-6CB2-4013-8152-4A6A73486645}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C43D770D-6CB2-4013-8152-4A6A73486645}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
