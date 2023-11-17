@@ -126,7 +126,7 @@ namespace EventPlanning.Tests.DomainTests
         }
 
         [Fact]
-        public void Cancel_When_EventStartsMoreThan4Hours_Should_Failt()
+        public void Cancel_When_EventStartsMoreThan4Hours_Should_Fail()
         {
             var registration = GetRegistration();
 
