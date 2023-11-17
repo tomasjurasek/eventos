@@ -54,7 +54,7 @@ namespace EventPlanning.Domain.Event
 
             if (Registrations > 0)
             {
-                return Result.Fail("EVENT_HAS_REGISTRATION");
+                return Result.Fail("EVENT_HAS_REGISTRATIONS");
             }
 
             State = EventState.Canceled;

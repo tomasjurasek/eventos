@@ -17,9 +17,6 @@ namespace EventPlanning.Application.Commands.CreateEvent
 
         protected override async Task<Result> HandleAsync(ConsumeContext<CreateEventCommand> context)
         {
-            // TODO Response 
-            // TODO Metrics
-
             var command = context.Message;
             var result = _eventAggregateFactory.Create(command.Name, command.Description, command.Organizer, command.Address, command.Capacity);
 
@@ -29,7 +26,7 @@ namespace EventPlanning.Application.Commands.CreateEvent
             }
             else
             {
-                await _eventRepository.StoreAsync(result.Value);
+                await _eventRepository.StoreAsync(result.Value); // TODO Result Handling
             }
 
             return Result.Ok();

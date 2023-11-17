@@ -14,13 +14,6 @@ namespace EventPlanning.API.Controllers
         public EventsController(IMediator mediator)
         {
             _mediator = mediator;
-            //var a = Propagators.DefaultTextMapPropagator;
-
-            //a.Inject(new PropagationContext(activityContext: Activity.Current.Context, Baggage.Current), "",);
-            //var context = a.Extract(default, );
-
-            //var b = new ActivitySource("a");
-            //b.StartActivity(,, context);
         }
 
         [HttpPost]

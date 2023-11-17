@@ -31,9 +31,8 @@ namespace EventPlanning.Tests.DomainTests
         }
 
         [Theory]
-        [InlineData("")]
-        [InlineData(null)]
-        public void Create_When_InvalidEventId_Should_Fail(string eventId)
+        [InlineData("00000000-0000-0000-0000-000000000000")]
+        public void Create_When_InvalidEventId_Should_Fail(Guid eventId)
         {
             var registration = _registrationAggregateFactory.Create(Id, eventId, Attendee);
 
@@ -150,7 +149,7 @@ namespace EventPlanning.Tests.DomainTests
 
 
         public static Guid Id => Guid.NewGuid();
-        public static string EventId => Guid.NewGuid().ToString();
+        public static Guid EventId => Guid.NewGuid();
         public static string Email => "test@test.com";
         public static Attendee Attendee => new Attendee() { Email = Email };
 

@@ -9,6 +9,7 @@ namespace EventPlanning.Application.Commands.CreateEvent
         public required string Description { get; init; }
         public DateTimeOffset StartedAt { get; init; }
         public DateTimeOffset FinishedAt { get; init; }
+
         [Range(0, int.MaxValue)]
         public int Capacity { get; init; }
         public required Organizer Organizer { get; init; }

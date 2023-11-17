@@ -1,4 +1,5 @@
-﻿using EventPlanning.Domain.Registration;
+﻿using EventPlanning.Domain.Event;
+using EventPlanning.Domain.Registration;
 
 namespace EventPlanning.Infrastructure.Repositories
 {

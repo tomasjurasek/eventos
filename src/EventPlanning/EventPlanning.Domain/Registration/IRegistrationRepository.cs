@@ -1,4 +1,6 @@
-﻿namespace EventPlanning.Domain.Registration
+﻿using EventPlanning.Domain.Event;
+
+namespace EventPlanning.Domain.Registration
 {
     public interface IRegistrationRepository
     {
