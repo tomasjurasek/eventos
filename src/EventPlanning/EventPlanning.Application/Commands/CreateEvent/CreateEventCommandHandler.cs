@@ -1,4 +1,5 @@
-﻿using EventPlanning.Domain.Event;
+﻿using EventPlanning.Domain.Common;
+using EventPlanning.Domain.Event;
 using FluentResults;
 using MassTransit;
 
@@ -6,30 +7,24 @@ namespace EventPlanning.Application.Commands.CreateEvent
 {
     internal class CreateEventCommandHandler : CommandHandlerBase<CreateEventCommand>
     {
-        private readonly IEventAggregateFactory _eventAggregateFactory;
-        private readonly IEventRepository _eventRepository;
+        private readonly IAggregateRootRepository<EventAggregate> _eventRepository;
 
-        public CreateEventCommandHandler(IEventAggregateFactory eventAggregateFactory, IEventRepository eventRepository)
+        public CreateEventCommandHandler(IAggregateRootRepository<EventAggregate> eventRepository)
         {
-            _eventAggregateFactory = eventAggregateFactory;
             _eventRepository = eventRepository;
         }
 
         protected override async Task<Result> HandleAsync(ConsumeContext<CreateEventCommand> context)
         {
             var command = context.Message;
-            var result = _eventAggregateFactory.Create(command.Name, command.Description, command.Organizer, command.Address, command.Capacity);
+            var result = EventAggregate.Create(Guid.NewGuid(), command.Name, command.Description, command.Organizer, command.Address, command.Capacity, command.StartedAt, command.FinishedAt);
 
-            if (result.IsFailed)
+            return result switch
             {
-                return Result.Fail(result.Errors);
-            }
-            else
-            {
-                await _eventRepository.StoreAsync(result.Value); // TODO Result Handling
-            }
+                { IsSuccess: true } => await _eventRepository.StoreAsync(result.Value),
+                _ => result.ToResult()
+            };
 
-            return Result.Ok();
         }
     }
 }

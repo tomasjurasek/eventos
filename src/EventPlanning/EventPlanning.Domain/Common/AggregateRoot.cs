@@ -4,7 +4,7 @@ namespace EventPlanning.Domain.Common
 {
     public abstract class AggregateRoot : IAggregateRoot
     {
-        protected AggregateRoot(IEnumerable<IDomainEvent> events)
+        public void Apply(IEnumerable<IDomainEvent> events)
         {
             foreach (var @event in events)
             {
@@ -12,6 +12,7 @@ namespace EventPlanning.Domain.Common
             }
         }
 
+        protected AggregateRoot() { }
         protected AggregateRoot(Guid id, DateTimeOffset createdAt)
         {
             Id = Guard.Argument(id).NotDefault();
@@ -20,23 +21,25 @@ namespace EventPlanning.Domain.Common
 
         public Guid Id { get; protected set; }
 
-        public int Version { get; private set; }
+        public int Version { get; protected set; }
 
         public DateTimeOffset CreatedAt { get; protected set; }
 
-        protected ICollection<IDomainEvent> _uncommitedEvents = new List<IDomainEvent>();
-        public IEnumerable<IDomainEvent> UncommitedEvents => _uncommitedEvents;
+
+        protected ICollection<IDomainEvent> _uncommittedEvents = new List<IDomainEvent>();
+        public IEnumerable<IDomainEvent> GetUncommittedEvents() => _uncommittedEvents;
+
 
         protected void Raise(IDomainEvent @event)
         {
             Mutate(@event);
-            _uncommitedEvents.Add(@event);
+            _uncommittedEvents.Add(@event);
         }
 
         private void Mutate(IDomainEvent @event)
         {
             Version++;
-            ((dynamic)this).On((dynamic)@event);
+            ((dynamic)this).Apply((dynamic)@event);
         }
     }
 

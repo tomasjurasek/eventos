@@ -1,22 +1,35 @@
 ﻿using Dawn;
 using EventPlanning.Domain.Common;
+using EventPlanning.Domain.Event.Events;
 using FluentResults;
 
 namespace EventPlanning.Domain.Event
 {
     public class EventAggregate : AggregateRoot
     {
-        // TODO
-        internal EventAggregate(IEnumerable<IDomainEvent> events) : base(events) { }
-
-        internal EventAggregate(Guid id, string name, string description, Organizer organizer, Address address, int capacity) : base(id, DateTimeOffset.UtcNow)
+        public static Result<EventAggregate> Create(Guid id, string name, string description, Organizer organizer, Address address, int capacity, DateTimeOffset startedAt, DateTimeOffset finishedAt)
         {
-            Capacity = Guard.Argument(capacity).NotZero().NotNegative();
-            Address = Guard.Argument(address).NotNull();
-            Name = Guard.Argument(name).NotNull().NotEmpty().MaxLength(20);
-            Description = Guard.Argument(description).NotNull().NotEmpty().MaxLength(100);
-            Organizer = Guard.Argument(organizer).NotNull();
-            State = EventState.Created;
+            try
+            {
+                Guard.Argument(capacity).NotZero().NotNegative();
+                Guard.Argument(address).NotNull();
+                Guard.Argument(name).NotNull().NotEmpty().MaxLength(20);
+                Guard.Argument(description).NotNull().NotEmpty().MaxLength(100);
+                Guard.Argument(organizer).NotNull();
+
+                return new EventAggregate(id, name, description, organizer, address, capacity, startedAt, finishedAt);
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail(ex.Message);
+            }
+        }
+
+        public EventAggregate() { } // TODO
+
+        internal EventAggregate(Guid id, string name, string description, Organizer organizer, Address address, int capacity, DateTimeOffset startedAt, DateTimeOffset finishedAt) : base(id, DateTimeOffset.UtcNow)
+        {
+            Raise(new EventCreated { Name = name, Description = description, Address = address, Organizer = organizer, StartedAt = startedAt, FinishedAt = finishedAt, Capacity = capacity });
         }
 
         public int Capacity { get; private set; }
@@ -32,6 +45,9 @@ namespace EventPlanning.Domain.Event
         public Organizer Organizer { get; private set; }
 
         public EventState State { get; private set; }
+
+        public DateTimeOffset StartedAt { get; private set; }
+        public DateTimeOffset FinishedAt { get; private set; }
 
         public Result AddRegistration()
         {
@@ -60,6 +76,14 @@ namespace EventPlanning.Domain.Event
             State = EventState.Canceled;
 
             return Result.Ok();
+        }
+
+
+        internal void Apply(EventCreated @event)
+        {
+            Description = @event.Description;
+            Address = @event.Address;
+            Name = @event.Name;
         }
 
     }

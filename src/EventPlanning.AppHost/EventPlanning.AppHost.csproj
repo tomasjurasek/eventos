@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EventPlanning.Gateway\EventPlanning.Gateway\EventPlanning.Gateway.csproj" />
     <ProjectReference Include="..\EventPlanning.ReadModel\EventPlanning.ReadModel.API\EventPlanning.ReadModel.API.csproj" />
     <ProjectReference Include="..\EventPlanning\EventPlanning.API\EventPlanning.API.csproj" />
   </ItemGroup>

@@ -1,18 +1,85 @@
 ﻿using EventPlanning.Domain.Common;
+using EventStore.Client;
 using FluentResults;
+using System.Text.Json;
+using System.Text;
+using EventPlanning.Infrastructure.Options;
+using Microsoft.Extensions.Options;
+using EventPlanning.Domain.Event.Events;
 
 namespace EventPlanning.Infrastructure.Repositories
 {
-    internal class AggregateRootRepository<TAggregate> : IAggregateRootRepository<TAggregate> where TAggregate : IAggregateRoot
+    internal class AggregateRootRepository<TAggregate> : IAggregateRootRepository<TAggregate> where TAggregate : IAggregateRoot, new ()
     {
-        public Task<Result<TAggregate>> FindAsync(Guid Id)
+        private EventStoreClient _store;
+
+        public AggregateRootRepository(IOptions<EventStoreOptions> eventStoreOptions)
         {
-            throw new NotImplementedException();
+            _store = new EventStoreClient(EventStoreClientSettings.Create(eventStoreOptions.Value.ConnectionString));
         }
 
-        public Task<Result> StoreAsync(TAggregate aggregate)
+        public async Task<Result<TAggregate>> FindAsync(Guid Id)
         {
-            throw new NotImplementedException();
+            var aggregate = new TAggregate();
+            try
+            {
+                var events = await _store
+                    .ReadStreamAsync(Direction.Forwards, Id.ToString(), StreamPosition.Start)
+                    .ToListAsync();
+
+                var parsedEvents = events
+                    .Select(s => (IDomainEvent)JsonSerializer.Deserialize(Encoding.UTF8.GetString(s.Event.Data.ToArray()), GetTypeFromEvent(s.Event.EventType)))
+                    .ToList();
+
+                if (parsedEvents is null)
+                {
+                    return Result.Fail("TODO");
+                }
+
+                aggregate.Apply(parsedEvents);
+                return aggregate;
+            }
+
+            catch (StreamNotFoundException)
+            {
+                return Result.Fail("TODO");
+            }
         }
+
+        public async Task<Result> StoreAsync(TAggregate aggregate)
+        {
+            try
+            {
+                var streamResult = _store.ReadStreamAsync(Direction.Forwards, aggregate.Id.ToString(), StreamPosition.End, 1);
+                var lastEvent = await streamResult.LastAsync();
+
+                if (lastEvent.Event.EventNumber.ToInt64() > aggregate.Version)
+                {
+                    return Result.Fail("TODO ERROR");
+                }
+
+                var eventData = aggregate.GetUncommittedEvents()
+                 .Select(s =>
+                  new EventData(Uuid.FromGuid(aggregate.Id), s.GetType().Name, JsonSerializer.SerializeToUtf8Bytes(s, s.GetType()).AsMemory()));
+
+
+                await _store.AppendToStreamAsync(aggregate.Id.ToString(), StreamState.Any, eventData);
+
+
+                return Result.Ok();
+            }
+            catch (Exception)
+            {
+                // LOG
+                return Result.Fail("TODO ERROR");
+            }
+        }
+
+        //TODO Dynamic??
+        private Type GetTypeFromEvent(string eventType) => eventType switch
+        {
+            nameof(EventCreated) => typeof(EventCreated),
+            _ => throw new ArgumentOutOfRangeException(),
+        };
     }
 }
