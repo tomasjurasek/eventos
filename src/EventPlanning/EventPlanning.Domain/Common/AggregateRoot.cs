@@ -13,6 +13,7 @@ namespace EventPlanning.Domain.Common
         }
 
         protected AggregateRoot() { }
+
         protected AggregateRoot(Guid id, DateTimeOffset createdAt)
         {
             Id = Guard.Argument(id).NotDefault();

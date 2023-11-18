@@ -6,6 +6,7 @@ using System.Text;
 using EventPlanning.Infrastructure.Options;
 using Microsoft.Extensions.Options;
 using EventPlanning.Domain.Event.Events;
+using System.Reflection;
 
 namespace EventPlanning.Infrastructure.Repositories
 {
@@ -20,7 +21,7 @@ namespace EventPlanning.Infrastructure.Repositories
 
         public async Task<Result<TAggregate>> FindAsync(Guid Id)
         {
-            var aggregate = new TAggregate();
+            var aggregate = CreateEmptyAggregate();
             try
             {
                 var events = await _store
@@ -74,6 +75,13 @@ namespace EventPlanning.Infrastructure.Repositories
                 return Result.Fail("TODO ERROR");
             }
         }
+
+
+        private TAggregate CreateEmptyAggregate() => (TAggregate)typeof(TAggregate)
+              .GetConstructor(
+                BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public,
+                null, [], Array.Empty<ParameterModifier>())
+              .Invoke([]);
 
         //TODO Dynamic??
         private Type GetTypeFromEvent(string eventType) => eventType switch

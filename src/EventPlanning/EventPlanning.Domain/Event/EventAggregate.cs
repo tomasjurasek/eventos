@@ -25,11 +25,11 @@ namespace EventPlanning.Domain.Event
             }
         }
 
-        public EventAggregate() { } // TODO
+        public EventAggregate() { } // TODO Fix
 
         internal EventAggregate(Guid id, string name, string description, Organizer organizer, Address address, int capacity, DateTimeOffset startedAt, DateTimeOffset finishedAt) : base(id, DateTimeOffset.UtcNow)
         {
-            Raise(new EventCreated { Name = name, Description = description, Address = address, Organizer = organizer, StartedAt = startedAt, FinishedAt = finishedAt, Capacity = capacity });
+            Raise(new EventCreated { Id = id, Name = name, Description = description, Address = address, Organizer = organizer, StartedAt = startedAt, FinishedAt = finishedAt, Capacity = capacity });
         }
 
         public int Capacity { get; private set; }
@@ -63,7 +63,7 @@ namespace EventPlanning.Domain.Event
 
         public Result Cancel()
         {
-            if (State == EventState.Canceled)
+            if (State == EventState.Close)
             {
                 return Result.Fail("EVENT_IS_ALREADY_CANCELED");
             }
@@ -73,7 +73,7 @@ namespace EventPlanning.Domain.Event
                 return Result.Fail("EVENT_HAS_REGISTRATIONS");
             }
 
-            State = EventState.Canceled;
+            Raise(new EventCanceled { Id = Id });
 
             return Result.Ok();
         }
@@ -81,9 +81,21 @@ namespace EventPlanning.Domain.Event
 
         internal void Apply(EventCreated @event)
         {
+            Id = @event.Id;
+            Name = @event.Name;
             Description = @event.Description;
             Address = @event.Address;
-            Name = @event.Name;
+            Organizer = @event.Organizer;
+            StartedAt = @event.StartedAt;
+            FinishedAt = @event.FinishedAt;
+            Capacity = @event.Capacity;
+            State = EventState.Open;
+        }
+
+        internal void Apply(EventCanceled @event)
+        {
+            Id = @event.Id;
+            State = EventState.Close;
         }
 
     }

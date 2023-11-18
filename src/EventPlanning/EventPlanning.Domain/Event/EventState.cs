@@ -1,8 +1,8 @@
 ﻿namespace EventPlanning.Domain.Event
 {
-    public enum EventState
+    public enum EventState // TODO
     {
-        Created = 0,
-        Canceled = 1,
+        Open = 0,
+        Close = 1,
     }
 }

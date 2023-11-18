@@ -79,7 +79,7 @@ namespace EventPlanning.Tests.DomainTests
             var result = @event.Cancel();
 
             result.IsSuccess.Should().BeTrue();
-            @event.State.Should().Be(EventState.Canceled);
+            @event.State.Should().Be(EventState.Close);
         }
 
         [Fact]
@@ -91,7 +91,7 @@ namespace EventPlanning.Tests.DomainTests
             var result = @event.Cancel();
 
             result.IsFailed.Should().BeTrue();
-            @event.State.Should().Be(EventState.Canceled);
+            @event.State.Should().Be(EventState.Close);
         }
 
 
