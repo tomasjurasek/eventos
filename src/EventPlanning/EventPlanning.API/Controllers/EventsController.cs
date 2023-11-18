@@ -22,14 +22,12 @@ namespace EventPlanning.API.Controllers
             var client = _mediator.CreateRequestClient<CreateEventCommand>();
 
             var result = await client.GetResponse<Result>(createEventCommand);
-            if (result.Message.IsSuccess)
+
+            return result switch
             {
-                return Ok();
-            }
-            else
-            {
-                return BadRequest(result.Message.Errors);
-            }
+                { Message.IsSuccess: true } => Ok(),
+                _ => BadRequest(result.Message.Errors)
+            };
         }
     }
 }

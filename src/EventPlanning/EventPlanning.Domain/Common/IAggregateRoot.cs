@@ -6,11 +6,11 @@
 
         DateTimeOffset CreatedAt { get; }
 
-        int Version { get; }
+        long Version { get; }
 
-        IEnumerable<IDomainEvent> GetUncommittedEvents();
+        IReadOnlyList<IDomainEvent> GetUncommittedEvents();
 
-        void Apply(IEnumerable<IDomainEvent> events);
+        void Apply(IList<IDomainEvent> events);
 
     }
 }

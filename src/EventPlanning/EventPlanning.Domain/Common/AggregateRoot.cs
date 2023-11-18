@@ -4,7 +4,7 @@ namespace EventPlanning.Domain.Common
 {
     public abstract class AggregateRoot : IAggregateRoot
     {
-        public void Apply(IEnumerable<IDomainEvent> events)
+        public void Apply(IList<IDomainEvent> events)
         {
             foreach (var @event in events)
             {
@@ -22,13 +22,13 @@ namespace EventPlanning.Domain.Common
 
         public Guid Id { get; protected set; }
 
-        public int Version { get; protected set; }
+        public long Version { get; protected set; }
 
         public DateTimeOffset CreatedAt { get; protected set; }
 
 
-        protected ICollection<IDomainEvent> _uncommittedEvents = new List<IDomainEvent>();
-        public IEnumerable<IDomainEvent> GetUncommittedEvents() => _uncommittedEvents;
+        private IList<IDomainEvent> _uncommittedEvents = new List<IDomainEvent>();
+        public IReadOnlyList<IDomainEvent> GetUncommittedEvents() => _uncommittedEvents.AsReadOnly();
 
 
         protected void Raise(IDomainEvent @event)

@@ -1,6 +1,6 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var eventBus = builder.AddRabbitMQContainer("eventPlanningEventBus");
+var eventBus = builder.AddRabbitMQContainer("eventBus");
 
 //var eventStore = builder.AddContainer("eventStore", "eventstore/eventstore:20.10.2-buster-slim")
 //    .WithServiceBinding(containerPort: 2113, hostPort: 2113,"http")
@@ -9,14 +9,16 @@ var eventBus = builder.AddRabbitMQContainer("eventPlanningEventBus");
 //    .WithEnvironment("EVENTSTORE_START_STANDARD_PROJECTIONS", "true")
 //    .WithEnvironment("EVENTSTORE_INSECURE", "true");
 
-builder.AddProject<Projects.EventPlanning_API>("eventPlanningService")
+var eventPlanningService = builder.AddProject<Projects.EventPlanning_API>("eventPlanningService")
     .WithReference(eventBus);
 
-builder.AddProject<Projects.EventPlanning_ReadModel_API>("eventPlanningReadModelService")
+var eventPlanningReadModelService = builder.AddProject<Projects.EventPlanning_ReadModel_API>("eventPlanningReadModelService")
     .WithReference(eventBus);
 
 
-builder.AddProject<Projects.EventPlanning_Gateway>("eventplanning.gateway");
+builder.AddProject<Projects.EventPlanning_Gateway>("eventPlanningGateway")
+    .WithReference(eventPlanningService)
+    .WithReference(eventPlanningReadModelService);
 
 
 builder.Build().Run();
