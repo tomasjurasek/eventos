@@ -1,7 +1,7 @@
 ﻿using Dawn;
-using EventPlanning.Domain.Common;
 using EventPlanning.Domain.Event.Events;
 using FluentResults;
+using Simlife.EventSourcing.Aggregates;
 
 namespace EventPlanning.Domain.Event
 {
@@ -27,9 +27,9 @@ namespace EventPlanning.Domain.Event
 
         public EventAggregate() { } // TODO Fix
 
-        internal EventAggregate(Guid id, string name, string description, Organizer organizer, Address address, int capacity, DateTimeOffset startedAt, DateTimeOffset finishedAt) : base(id, DateTimeOffset.UtcNow)
+        internal EventAggregate(Guid id, string name, string description, Organizer organizer, Address address, int capacity, DateTimeOffset startedAt, DateTimeOffset finishedAt)
         {
-            Raise(new EventCreated { Id = id, Name = name, Description = description, Address = address, Organizer = organizer, StartedAt = startedAt, FinishedAt = finishedAt, Capacity = capacity });
+            Raise(new EventCreated { AggregateId = id.ToString(), Name = name, Description = description, Address = address, Organizer = organizer, StartedAt = startedAt, FinishedAt = finishedAt, Capacity = capacity });
         }
 
         public int Capacity { get; private set; }
@@ -73,7 +73,7 @@ namespace EventPlanning.Domain.Event
                 return Result.Fail("EVENT_HAS_REGISTRATIONS");
             }
 
-            Raise(new EventCanceled { Id = Id });
+            Raise(new EventCanceled { AggregateId = Id.ToString() });
 
             return Result.Ok();
         }
@@ -81,7 +81,7 @@ namespace EventPlanning.Domain.Event
 
         internal void Apply(EventCreated @event)
         {
-            Id = @event.Id;
+            Id = Guid.Parse(@event.AggregateId);
             Name = @event.Name;
             Description = @event.Description;
             Address = @event.Address;
@@ -94,7 +94,7 @@ namespace EventPlanning.Domain.Event
 
         internal void Apply(EventCanceled @event)
         {
-            Id = @event.Id;
+            Id = Guid.Parse(@event.AggregateId);
             State = EventState.Close;
         }
 

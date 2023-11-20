@@ -27,6 +27,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventPlanning.ServiceDefaul
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventPlanning.Gateway", "EventPlanning.Gateway\EventPlanning.Gateway\EventPlanning.Gateway.csproj", "{503258B6-057B-4293-BFD4-6DE689410141}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simplife.Core", "..\..\Simplife\src\Simplife.Core\Simplife.Core.csproj", "{346193E9-25A5-46BD-9B5D-849377C3CD9D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simplife.EventSourcing", "..\..\Simplife\src\Simplife.EventSourcing\Simplife.EventSourcing.csproj", "{36F2B45F-A3F5-4BB6-BFE4-0FD4610EB27A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +77,14 @@ Global
 		{503258B6-057B-4293-BFD4-6DE689410141}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{503258B6-057B-4293-BFD4-6DE689410141}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{503258B6-057B-4293-BFD4-6DE689410141}.Release|Any CPU.Build.0 = Release|Any CPU
+		{346193E9-25A5-46BD-9B5D-849377C3CD9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{346193E9-25A5-46BD-9B5D-849377C3CD9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{346193E9-25A5-46BD-9B5D-849377C3CD9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{346193E9-25A5-46BD-9B5D-849377C3CD9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36F2B45F-A3F5-4BB6-BFE4-0FD4610EB27A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36F2B45F-A3F5-4BB6-BFE4-0FD4610EB27A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36F2B45F-A3F5-4BB6-BFE4-0FD4610EB27A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36F2B45F-A3F5-4BB6-BFE4-0FD4610EB27A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

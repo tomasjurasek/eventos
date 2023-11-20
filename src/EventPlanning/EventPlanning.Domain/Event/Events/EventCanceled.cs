@@ -1,9 +1,9 @@
-﻿using EventPlanning.Domain.Common;
+﻿using Simplife.Core.Events;
 
 namespace EventPlanning.Domain.Event.Events
 {
-    public record EventCanceled : IDomainEvent
+    public record EventCanceled : IEvent
     {
-        public required Guid Id { get; init; }
+        public string AggregateId { get; init;} 
     }
 }

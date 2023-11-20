@@ -1,13 +1,15 @@
 ﻿using Dawn;
-using EventPlanning.Domain.Common;
 using FluentResults;
+using Simlife.EventSourcing.Aggregates;
 
 namespace EventPlanning.Domain.Registration
 {
     public class RegistrationAggregate : AggregateRoot
     {
-        internal RegistrationAggregate(Guid id, Guid eventId, Attendee attendee) : base(id, DateTimeOffset.UtcNow)
+        internal RegistrationAggregate(Guid id, Guid eventId, Attendee attendee)
         {
+            Id = Guard.Argument(id).NotDefault();
+            CreatedAt = DateTimeOffset.UtcNow;
             Attendee = Guard.Argument(attendee).NotNull();
             EventId = Guard.Argument(eventId).NotDefault();
             State = RegistrationState.Waiting;

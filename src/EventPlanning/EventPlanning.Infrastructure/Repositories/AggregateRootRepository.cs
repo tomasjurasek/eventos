@@ -7,6 +7,8 @@ using EventPlanning.Infrastructure.Options;
 using Microsoft.Extensions.Options;
 using EventPlanning.Domain.Event.Events;
 using System.Reflection;
+using Simplife.EventSourcing.Aggregates;
+using Simplife.Core.Events;
 
 namespace EventPlanning.Infrastructure.Repositories
 {
@@ -29,7 +31,7 @@ namespace EventPlanning.Infrastructure.Repositories
                     .ToListAsync();
 
                 var parsedEvents = events
-                    .Select(s => (IDomainEvent)JsonSerializer.Deserialize(Encoding.UTF8.GetString(s.Event.Data.ToArray()), GetTypeFromEvent(s.Event.EventType)))
+                    .Select(s => (IEvent)JsonSerializer.Deserialize(Encoding.UTF8.GetString(s.Event.Data.ToArray()), GetTypeFromEvent(s.Event.EventType)))
                     .ToList();
 
                 if (parsedEvents is null)

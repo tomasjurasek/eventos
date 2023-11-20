@@ -9,12 +9,17 @@
   <ItemGroup>
     <PackageReference Include="Dawn.Guard" Version="1.12.0" />
     <PackageReference Include="FluentResults" Version="3.15.2" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
   </ItemGroup>
 
     <ItemGroup>
         <InternalsVisibleTo Include="EventPlanning.Tests" />
-        <InternalsVisibleTo  Include="EventPlanning.Infrastructure"/>
+        <InternalsVisibleTo Include="EventPlanning.Infrastructure" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\..\Simplife\src\Simplife.Core\Simplife.Core.csproj" />
+      <ProjectReference Include="..\..\..\..\Simplife\src\Simplife.EventSourcing\Simplife.EventSourcing.csproj" />
     </ItemGroup>
 
 </Project>

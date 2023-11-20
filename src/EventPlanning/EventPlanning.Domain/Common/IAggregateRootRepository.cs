@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using Simplife.EventSourcing.Aggregates;
 
 namespace EventPlanning.Domain.Common
 {

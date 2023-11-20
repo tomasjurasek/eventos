@@ -1,10 +1,10 @@
-﻿using EventPlanning.Domain.Common;
+﻿using Simplife.Core.Events;
 
 namespace EventPlanning.Domain.Event.Events
 {
-    public record EventCreated : IDomainEvent
+    public record EventCreated : IEvent
     {
-        public required Guid Id { get; init; }
+        public string AggregateId { get; init; }
         public required string Name { get; init; }
         public required int Capacity { get; init; }
         public required string Description { get; init; }
@@ -12,5 +12,6 @@ namespace EventPlanning.Domain.Event.Events
         public required DateTimeOffset FinishedAt { get; init; }
         public required Address Address { get; init; }
         public required Organizer Organizer { get; init; }
+
     }
 }
