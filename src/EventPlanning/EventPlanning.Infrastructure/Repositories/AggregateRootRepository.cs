@@ -39,7 +39,7 @@ namespace EventPlanning.Infrastructure.Repositories
                     return Result.Fail("TODO");
                 }
 
-                aggregate.Apply(parsedEvents);
+                aggregate.Rehydrate(parsedEvents);
                 return aggregate;
             }
 
