@@ -1,7 +1,8 @@
+using EventPlanning.Application.Commands;
 using EventPlanning.Application.Commands.CreateEvent;
 using FluentResults;
-using MassTransit.Mediator;
 using Microsoft.AspNetCore.Mvc;
+using Wolverine;
 
 namespace EventPlanning.API.Controllers
 {
@@ -9,24 +10,22 @@ namespace EventPlanning.API.Controllers
     [Route("[controller]")]
     public class EventsController : ControllerBase
     {
-        private readonly IMediator _mediator;
+        private readonly IMessageBus _messageBus;
 
-        public EventsController(IMediator mediator)
+        public EventsController(IMessageBus messageBus)
         {
-            _mediator = mediator;
+            _messageBus = messageBus;
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateEvent(CreateEventCommand createEventCommand)
         {
-            var client = _mediator.CreateRequestClient<CreateEventCommand>();
-
-            var result = await client.GetResponse<Result>(createEventCommand);
+            var result = await _messageBus.InvokeAsync<Result<CommandResult>>(createEventCommand);
 
             return result switch
             {
-                { Message.IsSuccess: true } => Ok(),
-                _ => BadRequest(result.Message.Errors)
+                { IsSuccess: true } => Ok(),
+                _ => BadRequest(result.Errors)
             };
         }
     }

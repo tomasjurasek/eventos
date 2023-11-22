@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MassTransit" Version="8.1.1" />
+    <PackageReference Include="OneOf" Version="3.0.263" />
+    <PackageReference Include="WolverineFx" Version="1.12.2" />
   </ItemGroup>
 
   <ItemGroup>

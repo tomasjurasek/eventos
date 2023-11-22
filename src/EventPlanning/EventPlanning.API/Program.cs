@@ -1,7 +1,14 @@
 using EventPlanning.Application.Extensions;
 using EventPlanning.Infrastructure.Extensions;
+using System.Reflection;
+using Wolverine;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseWolverine(context => {
+    context.Discovery.IncludeAssembly(Assembly.Load("EventPlanning.Application"));
+
+});
 
 builder.AddServiceDefaults();
 

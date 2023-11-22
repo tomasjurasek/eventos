@@ -1,16 +1,25 @@
 ﻿using FluentResults;
-using MassTransit;
+using Wolverine;
 
 namespace EventPlanning.Application.Commands
 {
-    internal abstract class CommandHandlerBase<TCommand> : IConsumer<TCommand> where TCommand : class, ICommand
+    public abstract class CommandHandlerBase<TCommand> : ICommandHandler<TCommand> where TCommand : class, ICommand
     {
-        public async Task Consume(ConsumeContext<TCommand> context)
+        public async Task Handle(TCommand command, IMessageContext context)
         {
-            var result = await HandleAsync(context);
-            await context.RespondAsync(result);
+            var result = await HandleAsync(command);
+            await context.RespondToSenderAsync(result);
         }
 
-        protected abstract Task<Result> HandleAsync(ConsumeContext<TCommand> context);
+        protected abstract Task<Result<CommandResult>> HandleAsync(TCommand context);
+    }
+
+    internal interface ICommandHandler<TCommand> where TCommand : class, ICommand
+    {
+    }
+
+    public record CommandResult
+    {
+        public Guid Id  { get; set; }   
     }
 }

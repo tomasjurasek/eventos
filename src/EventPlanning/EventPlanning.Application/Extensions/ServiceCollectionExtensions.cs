@@ -1,6 +1,4 @@
-﻿using EventPlanning.Application.Commands.CreateEvent;
-using MassTransit;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace EventPlanning.Application.Extensions
 {
@@ -8,10 +6,7 @@ namespace EventPlanning.Application.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            return services.AddMediator(cfg =>
-            {
-                cfg.AddConsumer<CreateEventCommandHandler>();
-            });
+            return services;
         }
     }
 }
