@@ -14,8 +14,8 @@ namespace EventPlanning.Domain.Event
                 Guard.Argument(id).NotDefault();
                 Guard.Argument(capacity).NotZero().NotNegative();
                 Guard.Argument(address).NotNull();
-                Guard.Argument(name).NotNull().NotEmpty().MaxLength(20);
-                Guard.Argument(description).NotNull().NotEmpty().MaxLength(100);
+                Guard.Argument(name).NotNull().NotEmpty();
+                Guard.Argument(description).NotNull().NotEmpty();
                 Guard.Argument(organizer).NotNull();
 
                 return new EventAggregate(id, name, description, organizer, address, capacity, startedAt, finishedAt);
