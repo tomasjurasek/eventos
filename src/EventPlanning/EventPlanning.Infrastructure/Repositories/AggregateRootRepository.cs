@@ -10,7 +10,7 @@ using EventPlanning.Domain.Event.Events;
 
 namespace EventPlanning.Infrastructure.Repositories
 {
-    internal class AggregateRootRepository<TAggregate> : IAggregateRootRepository<TAggregate> where TAggregate : IAggregateRoot, new()
+    internal class AggregateRootRepository<TAggregate> : IAggregateRootRepository<TAggregate> where TAggregate : IAggregateRoot
     {
         private EventStoreClient _store;
 

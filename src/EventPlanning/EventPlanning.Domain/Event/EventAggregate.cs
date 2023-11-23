@@ -26,7 +26,7 @@ namespace EventPlanning.Domain.Event
             }
         }
 
-        public EventAggregate() { } // TODO Fix
+        internal EventAggregate() { } // Rehydrate?
 
         internal EventAggregate(Guid id, string name, string description, Organizer organizer, Address address, int capacity, DateTimeOffset startedAt, DateTimeOffset finishedAt)
         {
