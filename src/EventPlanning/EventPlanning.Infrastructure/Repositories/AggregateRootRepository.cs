@@ -30,7 +30,7 @@ namespace EventPlanning.Infrastructure.Repositories
                     .ToListAsync();
 
                 var parsedEvents = events
-                    .Select(s => (IEvent)JsonSerializer.Deserialize(Encoding.UTF8.GetString(s.Event.Data.ToArray()), GetTypeFromEvent(s.Event.EventType)))
+                    .Select(s => (IEvent)JsonSerializer.Deserialize(s.Event.Data.Span, GetTypeFromEvent(s.Event.EventType)))
                     .ToList();
 
                 if (parsedEvents is null)
@@ -50,8 +50,8 @@ namespace EventPlanning.Infrastructure.Repositories
 
         public async Task<Result> StoreAsync(TAggregate aggregate)
         {
-            var streamResult =  _store.ReadStreamAsync(Direction.Forwards, aggregate.Id.ToString(), StreamPosition.End, 1);
-            
+            var streamResult = _store.ReadStreamAsync(Direction.Forwards, aggregate.Id.ToString(), StreamPosition.End, 1);
+
             long aggregateVersion = streamResult.LastStreamPosition?.ToInt64() ?? 0;
 
             if (aggregateVersion > aggregate.Version)
@@ -62,7 +62,7 @@ namespace EventPlanning.Infrastructure.Repositories
             var eventData = aggregate.GetUncommittedEvents()
              .Select(s =>
                 new EventData(
-                    Uuid.FromGuid(aggregate.Id), 
+                    Uuid.FromGuid(aggregate.Id),
                     s.GetType().Name,
                     JsonSerializer.SerializeToUtf8Bytes(s, s.GetType()).AsMemory()));
 
