@@ -79,7 +79,8 @@ namespace EventPlanning.Domain.Event
         }
 
 
-        internal void Apply(EventCreated @event)
+        // TODO
+        public void Apply(EventCreated @event)
         {
             Id = Guid.Parse(@event.AggregateId);
             Name = @event.Name;
@@ -92,7 +93,7 @@ namespace EventPlanning.Domain.Event
             State = EventState.Open;
         }
 
-        internal void Apply(EventCanceled @event)
+        public void Apply(EventCanceled @event)
         {
             Id = Guid.Parse(@event.AggregateId);
             State = EventState.Close;

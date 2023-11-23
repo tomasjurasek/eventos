@@ -2,7 +2,6 @@
 using EventPlanning.Domain.Event;
 using EventPlanning.Infrastructure.Options;
 using EventPlanning.Infrastructure.Repositories;
-using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,16 +11,12 @@ namespace EventPlanning.Infrastructure.Extensions
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddOptions<EventStoreOptions>(); // TODO Bind
+            services.AddOptions<EventStoreOptions>().Configure(s =>
+            {
+                s.ConnectionString = configuration.GetConnectionString(EventStoreOptions.Name);
+            });
             services.AddSingleton<IAggregateRootRepository<EventAggregate>, AggregateRootRepository<EventAggregate>>();
 
-            services.AddMassTransit(x =>
-            {
-                x.UsingInMemory((context, cfg) =>
-                {
-                    // TODO
-                });
-            });
 
             return services;
         }

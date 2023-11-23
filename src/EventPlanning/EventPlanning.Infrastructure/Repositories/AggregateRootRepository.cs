@@ -12,7 +12,7 @@ using Simplife.Core.Events;
 
 namespace EventPlanning.Infrastructure.Repositories
 {
-    internal class AggregateRootRepository<TAggregate> : IAggregateRootRepository<TAggregate> where TAggregate : IAggregateRoot, new ()
+    internal class AggregateRootRepository<TAggregate> : IAggregateRootRepository<TAggregate> where TAggregate : IAggregateRoot, new()
     {
         private EventStoreClient _store;
 
@@ -36,7 +36,7 @@ namespace EventPlanning.Infrastructure.Repositories
 
                 if (parsedEvents is null)
                 {
-                    return Result.Fail("TODO");
+                    return Result.Fail("ENTITY_NOT_FOUND");
                 }
 
                 aggregate.Rehydrate(parsedEvents);
@@ -45,37 +45,30 @@ namespace EventPlanning.Infrastructure.Repositories
 
             catch (StreamNotFoundException)
             {
-                return Result.Fail("TODO");
+                return Result.Fail("ENTITY_NOT_FOUND");
             }
         }
 
         public async Task<Result> StoreAsync(TAggregate aggregate)
         {
-            try
+            var streamResult =  _store.ReadStreamAsync(Direction.Forwards, aggregate.Id.ToString(), StreamPosition.End, 1);
+            
+            long aggregateVersion = streamResult.LastStreamPosition?.ToInt64() ?? 0;
+
+            if (aggregateVersion > aggregate.Version)
             {
-                var streamResult = _store.ReadStreamAsync(Direction.Forwards, aggregate.Id.ToString(), StreamPosition.End, 1);
-                var lastEvent = await streamResult.LastAsync();
-
-                if (lastEvent.Event.EventNumber.ToInt64() > aggregate.Version)
-                {
-                    return Result.Fail("TODO ERROR");
-                }
-
-                var eventData = aggregate.GetUncommittedEvents()
-                 .Select(s =>
-                  new EventData(Uuid.FromGuid(aggregate.Id), s.GetType().Name, JsonSerializer.SerializeToUtf8Bytes(s, s.GetType()).AsMemory()));
-
-
-                await _store.AppendToStreamAsync(aggregate.Id.ToString(), StreamState.Any, eventData);
-
-
-                return Result.Ok();
+                return Result.Fail("NEW_VERSION_EXISTS");
             }
-            catch (Exception)
-            {
-                // LOG
-                return Result.Fail("TODO ERROR");
-            }
+
+            var eventData = aggregate.GetUncommittedEvents()
+             .Select(s =>
+              new EventData(Uuid.FromGuid(aggregate.Id), s.GetType().Name, JsonSerializer.SerializeToUtf8Bytes(s, s.GetType()).AsMemory()));
+
+
+            await _store.AppendToStreamAsync(aggregate.Id.ToString(), StreamState.Any, eventData);
+
+            return Result.Ok();
+
         }
 
 
