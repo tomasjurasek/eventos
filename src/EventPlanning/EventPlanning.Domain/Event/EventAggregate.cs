@@ -11,6 +11,7 @@ namespace EventPlanning.Domain.Event
         {
             try
             {
+                Guard.Argument(id).NotDefault();
                 Guard.Argument(capacity).NotZero().NotNegative();
                 Guard.Argument(address).NotNull();
                 Guard.Argument(name).NotNull().NotEmpty().MaxLength(20);
