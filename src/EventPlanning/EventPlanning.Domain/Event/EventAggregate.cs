@@ -7,18 +7,11 @@ namespace EventPlanning.Domain.Event
 {
     public class EventAggregate : AggregateRoot
     {
-        public static Result<EventAggregate> Create(Guid id, string name, string description, Organizer organizer, Address address, int capacity, DateTimeOffset startedAt, DateTimeOffset finishedAt)
+        public static Result<EventAggregate> Create(Guid id, string name, string description, Organizer organizer, Address address, int capacity, DateTimeOffset startedAt, DateTimeOffset finishedAt, bool autoConfirmRegistrations = false)
         {
             try
             {
-                Guard.Argument(id).NotDefault();
-                Guard.Argument(capacity).NotZero().NotNegative();
-                Guard.Argument(address).NotNull();
-                Guard.Argument(name).NotNull().NotEmpty();
-                Guard.Argument(description).NotNull().NotEmpty();
-                Guard.Argument(organizer).NotNull();
-
-                return new EventAggregate(id, name, description, organizer, address, capacity, startedAt, finishedAt);
+                return new EventAggregate(id, name, description, organizer, address, capacity, startedAt, finishedAt, autoConfirmRegistrations);
             }
             catch (Exception ex)
             {
@@ -28,14 +21,32 @@ namespace EventPlanning.Domain.Event
 
         internal EventAggregate() { } // Rehydrate?
 
-        internal EventAggregate(Guid id, string name, string description, Organizer organizer, Address address, int capacity, DateTimeOffset startedAt, DateTimeOffset finishedAt)
+        internal EventAggregate(Guid id, string name, string description, Organizer organizer, Address address, int capacity, DateTimeOffset startedAt, DateTimeOffset finishedAt, bool autoConfirmRegistrations)
         {
-            Raise(new EventCreated { AggregateId = id.ToString(), Name = name, Description = description, Address = address, Organizer = organizer, StartedAt = startedAt, FinishedAt = finishedAt, Capacity = capacity });
+            Guard.Argument(id).NotDefault();
+            Guard.Argument(capacity).NotZero().NotNegative();
+            Guard.Argument(address).NotNull();
+            Guard.Argument(name).NotNull().NotEmpty();
+            Guard.Argument(description).NotNull().NotEmpty();
+            Guard.Argument(organizer).NotNull();
+
+            Raise(new EventCreated
+            {
+                AggregateId = id.ToString(),
+                Name = name,
+                Description = description,
+                Address = address,
+                Organizer = organizer,
+                StartedAt = startedAt,
+                FinishedAt = finishedAt,
+                Capacity = capacity,
+                AutoConfirmRegistrations = autoConfirmRegistrations
+            });
         }
 
         public int Capacity { get; private set; }
 
-        public int Registrations { get; private set; }
+        public int ConfirmedRegistrations { get; private set; }
 
         public Address Address { get; private set; }
 
@@ -47,17 +58,20 @@ namespace EventPlanning.Domain.Event
 
         public EventState State { get; private set; }
 
+        public bool AutoConfirmRegistrations { get; private set; }
+
         public DateTimeOffset StartedAt { get; private set; }
+
         public DateTimeOffset FinishedAt { get; private set; }
 
-        public Result AddRegistration()
+        public Result AddConfirmedRegistration()
         {
-            if (Capacity >= Registrations)
+            if (Capacity >= ConfirmedRegistrations)
             {
                 return Result.Fail("EVENT_IS_FULL");
             }
 
-            Registrations += 1;
+            ConfirmedRegistrations += 1;
 
             return Result.Ok();
         }
@@ -69,7 +83,7 @@ namespace EventPlanning.Domain.Event
                 return Result.Fail("EVENT_IS_ALREADY_CANCELED");
             }
 
-            if (Registrations > 0)
+            if (ConfirmedRegistrations > 0)
             {
                 return Result.Fail("EVENT_HAS_REGISTRATIONS");
             }
@@ -92,6 +106,7 @@ namespace EventPlanning.Domain.Event
             FinishedAt = @event.FinishedAt;
             Capacity = @event.Capacity;
             State = EventState.Open;
+            AutoConfirmRegistrations = @event.AutoConfirmRegistrations;
         }
 
         public void Apply(EventCanceled @event)

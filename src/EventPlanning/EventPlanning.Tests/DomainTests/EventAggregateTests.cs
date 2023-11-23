@@ -105,6 +105,6 @@ namespace EventPlanning.Tests.DomainTests
         public static Organizer Organizer => new Organizer() { Email = Email };
         public static Address Address => new Address() { City = "Brno", PostalCode = "54345", State = "Czech", Street = "Nova", StreetNo = "1" };
 
-        public EventAggregate GetRegistration() => new EventAggregate(Id, Name, Description, Organizer, Address, Capacity, StartedAt, FinishedAt);
+        public EventAggregate GetRegistration() => new EventAggregate(Id, Name, Description, Organizer, Address, Capacity, StartedAt, FinishedAt, false);
     }
 }

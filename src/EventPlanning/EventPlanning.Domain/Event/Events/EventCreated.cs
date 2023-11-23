@@ -12,6 +12,7 @@ namespace EventPlanning.Domain.Event.Events
         public required DateTimeOffset FinishedAt { get; init; }
         public required Address Address { get; init; }
         public required Organizer Organizer { get; init; }
+        public required bool AutoConfirmRegistrations { get; init; }
 
     }
 }
