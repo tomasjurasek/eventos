@@ -7,6 +7,7 @@ using EventPlanning.Infrastructure.Options;
 using Microsoft.Extensions.Options;
 using Simplife.EventSourcing.Aggregates;
 using Simplife.Core.Events;
+using EventPlanning.Domain.Event.Events;
 
 namespace EventPlanning.Infrastructure.Repositories
 {
@@ -37,7 +38,7 @@ namespace EventPlanning.Infrastructure.Repositories
                     return Result.Fail("ENTITY_NOT_FOUND");
                 }
 
-                aggregate!.Rehydrate(parsedEvents);
+                aggregate!.Rehydrate(parsedEvents!);
                 return aggregate;
             }
 
@@ -60,7 +61,10 @@ namespace EventPlanning.Infrastructure.Repositories
 
             var eventData = aggregate.GetUncommittedEvents()
              .Select(s =>
-              new EventData(Uuid.FromGuid(aggregate.Id), s.GetType().Name, JsonSerializer.SerializeToUtf8Bytes(s, s.GetType()).AsMemory()));
+                new EventData(
+                    Uuid.FromGuid(aggregate.Id), 
+                    s.GetType().Name,
+                    JsonSerializer.SerializeToUtf8Bytes(s, s.GetType()).AsMemory()));
 
 
             await _store.AppendToStreamAsync(aggregate.Id.ToString(), StreamState.Any, eventData);
@@ -68,5 +72,12 @@ namespace EventPlanning.Infrastructure.Repositories
             return Result.Ok();
 
         }
+
+        //TODO Dynamic??
+        private Type GetTypeFromEvent(string eventType) => eventType switch
+        {
+            nameof(EventCreated) => typeof(EventCreated),
+            _ => throw new ArgumentOutOfRangeException(),
+        };
     }
 }
