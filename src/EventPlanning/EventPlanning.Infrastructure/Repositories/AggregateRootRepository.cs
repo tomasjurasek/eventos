@@ -2,7 +2,6 @@
 using EventStore.Client;
 using FluentResults;
 using System.Text.Json;
-using System.Text;
 using EventPlanning.Infrastructure.Options;
 using Microsoft.Extensions.Options;
 using Simplife.EventSourcing.Aggregates;
