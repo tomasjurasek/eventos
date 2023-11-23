@@ -3,6 +3,7 @@ using Wolverine;
 
 namespace EventPlanning.Application.Commands
 {
+    // Do I need this?? 
     public abstract class CommandHandlerBase<TCommand> : ICommandHandler<TCommand> where TCommand : class, ICommand
     {
         //TODO
@@ -20,6 +21,6 @@ namespace EventPlanning.Application.Commands
 
     public record CommandResult
     {
-        public Guid Id  { get; set; }   
+        public Guid Id { get; set; }
     }
 }

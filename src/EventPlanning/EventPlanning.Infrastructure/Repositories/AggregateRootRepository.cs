@@ -5,8 +5,6 @@ using System.Text.Json;
 using System.Text;
 using EventPlanning.Infrastructure.Options;
 using Microsoft.Extensions.Options;
-using EventPlanning.Domain.Event.Events;
-using System.Reflection;
 using Simplife.EventSourcing.Aggregates;
 using Simplife.Core.Events;
 
@@ -23,7 +21,7 @@ namespace EventPlanning.Infrastructure.Repositories
 
         public async Task<Result<TAggregate>> FindAsync(Guid Id)
         {
-            var aggregate = CreateEmptyAggregate();
+            var aggregate = default(TAggregate);
             try
             {
                 var events = await _store
@@ -39,7 +37,7 @@ namespace EventPlanning.Infrastructure.Repositories
                     return Result.Fail("ENTITY_NOT_FOUND");
                 }
 
-                aggregate.Rehydrate(parsedEvents);
+                aggregate!.Rehydrate(parsedEvents);
                 return aggregate;
             }
 
@@ -70,19 +68,5 @@ namespace EventPlanning.Infrastructure.Repositories
             return Result.Ok();
 
         }
-
-
-        private TAggregate CreateEmptyAggregate() => (TAggregate)typeof(TAggregate)
-              .GetConstructor(
-                BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public,
-                null, [], Array.Empty<ParameterModifier>())
-              .Invoke([]);
-
-        //TODO Dynamic??
-        private Type GetTypeFromEvent(string eventType) => eventType switch
-        {
-            nameof(EventCreated) => typeof(EventCreated),
-            _ => throw new ArgumentOutOfRangeException(),
-        };
     }
 }
