@@ -24,7 +24,7 @@ namespace EventPlanning.API.Controllers
 
             return result switch
             {
-                { IsSuccess: true } => Ok(),
+                { IsSuccess: true } => Ok(result.Value.Id),
                 _ => BadRequest(result.Errors)
             };
         }

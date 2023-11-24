@@ -71,7 +71,10 @@ namespace EventPlanning.Domain.Event
                 return Result.Fail("EVENT_IS_FULL");
             }
 
-            ConfirmedRegistrations += 1;
+            Raise(new EventConfirmedRegistration
+            {
+                AggregateId = Id.ToString(),
+            });
 
             return Result.Ok();
         }
@@ -94,8 +97,13 @@ namespace EventPlanning.Domain.Event
         }
 
 
-        // TODO
-        public void Apply(EventCreated @event)
+        private void Apply(EventConfirmedRegistration @event)
+        {
+            ConfirmedRegistrations += 1;
+        }
+
+        // TODO Dynamic and Private
+        private void Apply(EventCreated @event)
         {
             Id = Guid.Parse(@event.AggregateId);
             Name = @event.Name;
@@ -109,7 +117,7 @@ namespace EventPlanning.Domain.Event
             AutoConfirmRegistrations = @event.AutoConfirmRegistrations;
         }
 
-        public void Apply(EventCanceled @event)
+        private void Apply(EventCanceled @event)
         {
             Id = Guid.Parse(@event.AggregateId);
             State = EventState.Close;
