@@ -71,7 +71,7 @@ namespace EventPlanning.Domain.Event
                 return Result.Fail("EVENT_IS_FULL");
             }
 
-            Raise(new EventConfirmedRegistration
+            Raise(new EventConfirmedRegistration // Bad flow?
             {
                 AggregateId = Id.ToString(),
             });
@@ -102,7 +102,6 @@ namespace EventPlanning.Domain.Event
             ConfirmedRegistrations += 1;
         }
 
-        // TODO Dynamic and Private
         private void Apply(EventCreated @event)
         {
             Id = Guid.Parse(@event.AggregateId);
