@@ -33,6 +33,8 @@ public static class Extensions
     {
         var appName = builder.Configuration["APP_NAME"]; // TODO default
 
+        builder.Services.AddMetrics();
+
         builder.Logging.AddOpenTelemetry(logging =>
         {
             logging.IncludeFormattedMessage = true;
