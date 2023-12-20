@@ -14,8 +14,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EventPlanning.Gateway\EventPlanning.Gateway\EventPlanning.Gateway.csproj" />
-    <ProjectReference Include="..\EventPlanning.ReadModel\EventPlanning.ReadModel.API\EventPlanning.ReadModel.API.csproj" />
-    <ProjectReference Include="..\EventPlanning\EventPlanning.API\EventPlanning.API.csproj" />
+    <ProjectReference Include="..\EventPlanning.Reader\EventPlanning.Reader.API\EventPlanning.Reader.API.csproj" />
+    <ProjectReference Include="..\EventPlanning.Writer\EventPlanning.Writer.API\EventPlanning.Writer.API.csproj" />
   </ItemGroup>
 
 </Project>

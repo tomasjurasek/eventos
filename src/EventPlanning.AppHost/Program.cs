@@ -10,11 +10,11 @@ builder.AddContainer("eventStore", "eventstore/eventstore", "20.10.2-buster-slim
     .WithEnvironment("EVENTSTORE_START_STANDARD_PROJECTIONS", "true")
     .WithEnvironment("EVENTSTORE_INSECURE", "true");
 
-var eventPlanningService = builder.AddProject<Projects.EventPlanning_API>("eventPlanningService")
+var eventPlanningService = builder.AddProject<Projects.EventPlanning_Writer_API>("eventPlanningService")
     .WithReference(eventBus);
     
 
-var eventPlanningReadModelService = builder.AddProject<Projects.EventPlanning_ReadModel_API>("eventPlanningReadModelService")
+var eventPlanningReadModelService = builder.AddProject<Projects.EventPlanning_Reader_API>("eventPlanningReadModelService")
     .WithReference(eventBus);
 
 
