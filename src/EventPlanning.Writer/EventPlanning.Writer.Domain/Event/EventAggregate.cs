@@ -1,7 +1,7 @@
 ﻿using Dawn;
 using EventPlanning.Writer.Domain.Event.Events;
 using FluentResults;
-using Simlife.EventSourcing.Aggregates;
+using Simplife.EventSourcing.Aggregates;
 
 namespace EventPlanning.Writer.Domain.Event
 {
@@ -40,13 +40,11 @@ namespace EventPlanning.Writer.Domain.Event
                 StartedAt = startedAt,
                 FinishedAt = finishedAt,
                 Capacity = capacity,
-                AutoConfirmRegistrations = autoConfirmRegistrations
+                OccurredAt = DateTimeOffset.UtcNow
             });
         }
 
         public int Capacity { get; private set; }
-
-        public int ConfirmedRegistrations { get; private set; }
 
         public Address Address { get; private set; }
 
@@ -58,26 +56,9 @@ namespace EventPlanning.Writer.Domain.Event
 
         public EventState State { get; private set; }
 
-        public bool AutoConfirmRegistrations { get; private set; }
-
         public DateTimeOffset StartedAt { get; private set; }
 
         public DateTimeOffset FinishedAt { get; private set; }
-
-        public Result AddConfirmedRegistration()
-        {
-            if (Capacity >= ConfirmedRegistrations)
-            {
-                return Result.Fail("EVENT_IS_FULL");
-            }
-
-            Raise(new EventConfirmedRegistration // Bad flow?
-            {
-                AggregateId = Id.ToString(),
-            });
-
-            return Result.Ok();
-        }
 
         public Result Cancel()
         {
@@ -86,23 +67,12 @@ namespace EventPlanning.Writer.Domain.Event
                 return Result.Fail("EVENT_IS_ALREADY_CANCELED");
             }
 
-            if (ConfirmedRegistrations > 0)
-            {
-                return Result.Fail("EVENT_HAS_REGISTRATIONS");
-            }
-
-            Raise(new EventCanceled { AggregateId = Id.ToString() });
+            Raise(new EventCanceled { AggregateId = Id.ToString(), OccurredAt = DateTimeOffset.UtcNow });
 
             return Result.Ok();
         }
 
-
-        private void Apply(EventConfirmedRegistration @event)
-        {
-            ConfirmedRegistrations += 1;
-        }
-
-        private void Apply(EventCreated @event)
+        public void Apply(EventCreated @event)
         {
             Id = Guid.Parse(@event.AggregateId);
             Name = @event.Name;
@@ -113,10 +83,9 @@ namespace EventPlanning.Writer.Domain.Event
             FinishedAt = @event.FinishedAt;
             Capacity = @event.Capacity;
             State = EventState.Open;
-            AutoConfirmRegistrations = @event.AutoConfirmRegistrations;
         }
 
-        private void Apply(EventCanceled @event)
+        public void Apply(EventCanceled @event)
         {
             Id = Guid.Parse(@event.AggregateId);
             State = EventState.Close;

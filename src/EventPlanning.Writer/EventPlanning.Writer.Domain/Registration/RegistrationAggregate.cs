@@ -1,6 +1,6 @@
 ﻿using Dawn;
 using FluentResults;
-using Simlife.EventSourcing.Aggregates;
+using Simplife.EventSourcing.Aggregates;
 
 namespace EventPlanning.Writer.Domain.Registration
 {

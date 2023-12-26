@@ -29,7 +29,7 @@ namespace EventPlanning.Writer.Infrastructure.Repositories
                     .ToListAsync();
 
                 var parsedEvents = events
-                    .Select(s => (IEvent)JsonSerializer.Deserialize(s.Event.Data.Span, GetTypeFromEvent(s.Event.EventType)))
+                    .Select(s => (IEvent)JsonSerializer.Deserialize(s.Event.Data.Span, GetTypeFromEvent(s.Event.EventType))!)
                     .ToList();
 
                 if (parsedEvents is null)
@@ -76,6 +76,7 @@ namespace EventPlanning.Writer.Infrastructure.Repositories
         private Type GetTypeFromEvent(string eventType) => eventType switch
         {
             nameof(EventCreated) => typeof(EventCreated),
+            nameof(EventCanceled) => typeof(EventCanceled),
             _ => throw new ArgumentOutOfRangeException(),
         };
     }

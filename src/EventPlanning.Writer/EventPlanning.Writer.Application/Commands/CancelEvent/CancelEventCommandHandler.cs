@@ -4,24 +4,24 @@ using FluentResults;
 
 namespace EventPlanning.Writer.Application.Commands
 {
-    public class CreateEventCommandHandler : CommandHandlerBase<CreateEventCommand>
+    public class CancelEventCommandHandler : CommandHandlerBase<CancelEventCommand>
     {
         private readonly IAggregateRootRepository<EventAggregate> _eventRepository;
 
-        public CreateEventCommandHandler(IAggregateRootRepository<EventAggregate> eventRepository)
+        public CancelEventCommandHandler(IAggregateRootRepository<EventAggregate> eventRepository)
         {
             _eventRepository = eventRepository;
         }
 
-        protected override async Task<Result<CommandResult>> HandleAsync(CreateEventCommand command)
+        protected override async Task<Result<CommandResult>> HandleAsync(CancelEventCommand command)
         {
-            var result = EventAggregate.Create(Guid.NewGuid(), command.Name, command.Description, command.Organizer, command.Address, command.Capacity, command.StartedAt, command.FinishedAt);
-            return result switch
-            {
-                { IsSuccess: true } => await StoreAsync(result.Value),
-                _ => result.ToResult()
-            };
+            var result = await _eventRepository.FindAsync(command.Id);
 
+            result.Value.Cancel();
+
+            return await StoreAsync(result.Value);
+
+            // TODO
             async Task<Result<CommandResult>> StoreAsync(EventAggregate aggregate)
             {
                 var result = await _eventRepository.StoreAsync(aggregate);

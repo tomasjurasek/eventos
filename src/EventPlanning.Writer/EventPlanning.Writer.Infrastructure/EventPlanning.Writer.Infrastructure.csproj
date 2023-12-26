@@ -8,12 +8,13 @@
 
     <ItemGroup>
         <PackageReference Include="EventStore.Client.Grpc.Streams" Version="23.1.0" />
-        <PackageReference Include="MassTransit" Version="8.1.1" />
+        <PackageReference Include="MassTransit" Version="8.1.3" />
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\EventPlanning.Writer.Application\EventPlanning.Writer.Application.csproj" />
         <ProjectReference Include="..\EventPlanning.Writer.Domain\EventPlanning.Writer.Domain.csproj" />
-        <InternalsVisibleTo  Include="EventPlanning.Writer.Tests"/>
+        <InternalsVisibleTo Include="EventPlanning.Writer.Tests" />
     </ItemGroup>
 
 </Project>

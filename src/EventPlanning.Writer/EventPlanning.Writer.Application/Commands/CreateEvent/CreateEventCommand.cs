@@ -1,7 +1,7 @@
 ﻿using EventPlanning.Writer.Domain.Event;
 using System.ComponentModel.DataAnnotations;
 
-namespace EventPlanning.Writer.Application.Commands.CreateEvent
+namespace EventPlanning.Writer.Application.Commands
 {
     public record CreateEventCommand : ICommand
     {
