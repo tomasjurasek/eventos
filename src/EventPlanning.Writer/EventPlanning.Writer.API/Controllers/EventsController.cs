@@ -17,11 +17,24 @@ namespace EventPlanning.Writer.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateEvent(CreateEventCommand createEventCommand)
         {
             var client = _mediator.CreateRequestClient<CreateEventCommand>();
             var result = await client.GetResponse<Result<CommandResult>>(createEventCommand);
+
+            return result.Message switch
+            {
+                { IsSuccess: true } => Ok(result.Message.Value.Id),
+                _ => BadRequest(result.Message.Errors)
+            };
+        }
+
+        [HttpPost("cancel")]
+        public async Task<IActionResult> CancelEvent(CancelEventCommand cancelEventCommand)
+        {
+            var client = _mediator.CreateRequestClient<CancelEventCommand>();
+            var result = await client.GetResponse<Result<CommandResult>>(cancelEventCommand);
 
             return result.Message switch
             {

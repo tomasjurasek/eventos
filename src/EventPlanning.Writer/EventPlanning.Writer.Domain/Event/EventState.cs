@@ -1,6 +1,6 @@
 ﻿namespace EventPlanning.Writer.Domain.Event
 {
-    public enum EventState // TODO
+    public enum EventState
     {
         Open = 0,
         Close = 1,

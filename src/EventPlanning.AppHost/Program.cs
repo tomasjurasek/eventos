@@ -10,6 +10,7 @@ builder.AddContainer("eventStore", "eventstore/eventstore", "20.10.2-buster-slim
     .WithEnvironment("EVENTSTORE_START_STANDARD_PROJECTIONS", "true")
     .WithEnvironment("EVENTSTORE_INSECURE", "true");
 
+
 var writerService = builder.AddProject<Projects.EventPlanning_Writer_API>("writer")
     .WithReference(eventBus);
     
