@@ -28,20 +28,13 @@ namespace EventPlanning.Writer.Infrastructure
                 filterOptions: new SubscriptionFilterOptions(EventTypeFilter.ExcludeSystemEvents()), cancellationToken: cancellationToken);
         }
 
-        private async Task EventReceivedAsync(StreamSubscription _, ResolvedEvent resolvedEvent, CancellationToken c)
+        private async Task EventReceivedAsync(StreamSubscription _, ResolvedEvent resolvedEvent, CancellationToken cancellationToken)
         {
-            try
-            {
-                var type = GetTypeFromEvent(resolvedEvent.Event.EventType);
-                var jsonData = Encoding.UTF8.GetString(resolvedEvent.Event.Data.ToArray());
-                var @event = (IEvent)JsonSerializer.Deserialize(jsonData, type)!;
+            var type = GetTypeFromEvent(resolvedEvent.Event.EventType);
+            var jsonData = Encoding.UTF8.GetString(resolvedEvent.Event.Data.ToArray());
+            var @event = (IEvent)JsonSerializer.Deserialize(jsonData, type)!;
 
-                await _bus.Publish(type, @event);
-            }
-            catch (Exception ex)
-            {
-                // TOOD
-            }
+            await _bus.Publish(type, @event, cancellationToken: cancellationToken);
         }
 
         //TODO Dynamic??
