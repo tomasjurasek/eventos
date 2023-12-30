@@ -72,7 +72,7 @@ namespace EventPlanning.Writer.Domain.Event
             return Result.Ok();
         }
 
-        public void Apply(EventCreated @event)
+        private void Apply(EventCreated @event)
         {
             Id = Guid.Parse(@event.AggregateId);
             Name = @event.Name;
@@ -85,7 +85,7 @@ namespace EventPlanning.Writer.Domain.Event
             State = EventState.Open;
         }
 
-        public void Apply(EventCanceled @event)
+        private void Apply(EventCanceled @event)
         {
             Id = Guid.Parse(@event.AggregateId);
             State = EventState.Close;
