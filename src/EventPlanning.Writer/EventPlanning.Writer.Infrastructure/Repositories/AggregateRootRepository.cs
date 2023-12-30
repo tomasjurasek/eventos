@@ -3,7 +3,7 @@ using FluentResults;
 using System.Text.Json;
 using Microsoft.Extensions.Options;
 using Simplife.EventSourcing.Aggregates;
-using Simplife.Core.Events;
+using Simplife.Domain.Events;
 using EventPlanning.Writer.Domain.Common;
 using EventPlanning.Writer.Domain.Event.Events;
 using EventPlanning.Writer.Infrastructure.Options;

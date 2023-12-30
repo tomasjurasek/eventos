@@ -2,10 +2,10 @@
 using EventStore.Client;
 using MassTransit;
 using Microsoft.Extensions.Options;
-using Simplife.Core.Events;
 using System.Text.Json;
 using System.Text;
 using EventPlanning.Writer.Infrastructure.Options;
+using Simplife.Domain.Events;
 
 namespace EventPlanning.Writer.Infrastructure
 {

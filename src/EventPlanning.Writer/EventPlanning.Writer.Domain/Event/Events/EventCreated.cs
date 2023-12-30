@@ -1,4 +1,4 @@
-﻿using Simplife.Core.Events;
+﻿using Simplife.Domain.Events;
 
 namespace EventPlanning.Writer.Domain.Event.Events
 {
