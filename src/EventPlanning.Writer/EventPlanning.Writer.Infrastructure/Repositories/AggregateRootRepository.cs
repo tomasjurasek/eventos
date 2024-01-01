@@ -41,7 +41,7 @@ namespace EventPlanning.Writer.Infrastructure.Repositories
             await using var session = _store.LightweightSession();
 
             // TODO
-            session.Events.AppendExclusive();
+            //session.Events.AppendExclusive();
             return Result.Ok();
 
         }
