@@ -8,6 +8,7 @@ using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RabbitMQ.Client;
+using Marten;
 
 namespace EventPlanning.Writer.Infrastructure.Extensions
 {
@@ -18,6 +19,11 @@ namespace EventPlanning.Writer.Infrastructure.Extensions
             services.AddOptions<EventStoreOptions>().Configure(s =>
             {
                 s.ConnectionString = configuration.GetConnectionString(EventStoreOptions.Name)!;
+            });
+
+            services.AddMarten(options =>
+            {
+                options.Connection(configuration.GetConnectionString(EventStoreOptions.Name)!);
             });
 
             services.AddSingleton<IAggregateRootRepository<EventAggregate>, AggregateRootRepository<EventAggregate>>();
