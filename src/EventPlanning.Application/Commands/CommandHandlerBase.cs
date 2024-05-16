@@ -1,14 +1,16 @@
 ﻿using FluentResults;
-using MassTransit;
+using Wolverine;
+using Wolverine.Attributes;
 
 namespace EventPlanning.Application.Commands
 {
-    public abstract class CommandHandlerBase<TCommand>: IConsumer<TCommand> where TCommand : class, ICommand
+    [WolverineHandler]
+    public abstract class CommandHandlerBase<TCommand> where TCommand : class, ICommand
     {
-        public async Task Consume(ConsumeContext<TCommand> context)
+        public async Task<Result<CommandResult>> HandleAsync(TCommand command, Envelope envelope)
         {
-            var result = await HandleAsync(context.Message);
-            await context.RespondAsync(result);
+            var result = await HandleAsync(command);
+            return result;
         }
 
         protected abstract Task<Result<CommandResult>> HandleAsync(TCommand context);

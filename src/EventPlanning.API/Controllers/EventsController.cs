@@ -1,7 +1,7 @@
 using EventPlanning.Application.Commands;
 using FluentResults;
-using MassTransit.Mediator;
 using Microsoft.AspNetCore.Mvc;
+using Wolverine;
 
 namespace EventPlanning.API.Controllers
 {
@@ -10,9 +10,9 @@ namespace EventPlanning.API.Controllers
     [Route("[controller]")]
     public class EventsController : ControllerBase
     {
-        private readonly IMediator _mediator;
+        private readonly IMessageBus _mediator;
 
-        public EventsController(IMediator mediator)
+        public EventsController(IMessageBus mediator)
         {
             _mediator = mediator;
         }
@@ -20,26 +20,24 @@ namespace EventPlanning.API.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> CreateEvent(CreateEventCommand createEventCommand)
         {
-            var client = _mediator.CreateRequestClient<CreateEventCommand>();
-            var result = await client.GetResponse<Result<CommandResult>>(createEventCommand);
-
-            return result.Message switch
+            var result = await _mediator.InvokeAsync<Result<CommandResult>>(createEventCommand);
+           
+            return result switch
             {
-                { IsSuccess: true } => Ok(result.Message.Value.Id),
-                _ => BadRequest(result.Message.Errors)
+                { IsSuccess: true } => Ok(result.Value.Id),
+                _ => BadRequest(result.Errors)
             };
         }
 
         [HttpPost("cancel")]
         public async Task<IActionResult> CancelEvent(CancelEventCommand cancelEventCommand)
         {
-            var client = _mediator.CreateRequestClient<CancelEventCommand>();
-            var result = await client.GetResponse<Result<CommandResult>>(cancelEventCommand);
+            var result = await _mediator.InvokeAsync<Result<CommandResult>>(cancelEventCommand);
 
-            return result.Message switch
+            return result switch
             {
-                { IsSuccess: true } => Ok(result.Message.Value.Id),
-                _ => BadRequest(result.Message.Errors)
+                { IsSuccess: true } => Ok(result.Value.Id),
+                _ => BadRequest(result.Errors)
             };
         }
     }

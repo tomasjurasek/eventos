@@ -7,14 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="EventStore.Client.Grpc.Streams" Version="23.1.0" />
         <PackageReference Include="Marten" Version="6.4.1" />
-        <PackageReference Include="MassTransit" Version="8.1.3" />
-        <PackageReference Include="MassTransit.RabbitMQ" Version="8.1.3" />
     </ItemGroup>
 
     <ItemGroup>
-        <InternalsVisibleTo Include="EventPlanning.Writer.Tests" />
+        <InternalsVisibleTo Include="EventPlanning.Tests" />
     </ItemGroup>
 
     <ItemGroup>
