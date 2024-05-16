@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="EventStore.Client.Grpc.Streams" Version="23.1.0" />
+        <PackageReference Include="Marten" Version="6.4.1" />
+        <PackageReference Include="MassTransit" Version="8.1.3" />
+        <PackageReference Include="MassTransit.RabbitMQ" Version="8.1.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="EventPlanning.Writer.Tests" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\EventPlanning.Application\EventPlanning.Application.csproj" />
+      <ProjectReference Include="..\EventPlanning.Domain\EventPlanning.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

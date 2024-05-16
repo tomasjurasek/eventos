@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+      <TargetFramework>net8.0</TargetFramework>
+      <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dawn.Guard" Version="1.12.0" />
+    <PackageReference Include="FluentResults" Version="3.15.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Simplife.EventSourcing" Version="0.9.1" />
+  </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="EventPlanning.Tests" />
+        <InternalsVisibleTo Include="EventPlanning.Infrastructure" />
+    </ItemGroup>
+
+</Project>
