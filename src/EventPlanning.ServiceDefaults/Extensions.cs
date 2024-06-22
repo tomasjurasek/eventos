@@ -13,7 +13,7 @@ public static class Extensions
 {
     public static IHostApplicationBuilder AddServiceDefaults(this IHostApplicationBuilder builder)
     {
-        var appName = builder.Configuration["OTEL_SERVICE_NAME"];
+        var appName = builder.Configuration["OTEL_SERVICE_NAME"]; // APP_NAME ??
 
         builder.Services.AddMetrics();
 
@@ -43,7 +43,6 @@ public static class Extensions
                 {
                     tracing.SetSampler(new AlwaysOnSampler());
                 }
-
                 tracing.AddAspNetCoreInstrumentation()
                        .AddHttpClientInstrumentation()
                        .AddOtlpExporter();
@@ -56,7 +55,7 @@ public static class Extensions
         builder.Services.ConfigureHttpClientDefaults(http =>
         {
             http.AddStandardResilienceHandler();
-            http.UseServiceDiscovery();
+            http.AddServiceDiscovery();
         });
 
         return builder;

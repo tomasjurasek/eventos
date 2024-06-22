@@ -27,6 +27,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{57BB48
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simplife.Domain", "..\..\Simplife\src\Simplife.Domain\Simplife.Domain.csproj", "{C86877CF-5A0F-4324-93F7-A04E29B30D8A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventPlanning.Aspire.AppHost", "EventPlanning.Aspire\EventPlanning.Aspire.AppHost.csproj", "{AA8A9B8A-1455-4012-8596-C9820B4B5C08}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{C86877CF-5A0F-4324-93F7-A04E29B30D8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C86877CF-5A0F-4324-93F7-A04E29B30D8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C86877CF-5A0F-4324-93F7-A04E29B30D8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA8A9B8A-1455-4012-8596-C9820B4B5C08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA8A9B8A-1455-4012-8596-C9820B4B5C08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA8A9B8A-1455-4012-8596-C9820B4B5C08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA8A9B8A-1455-4012-8596-C9820B4B5C08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,6 +87,7 @@ Global
 		{AB8F66DD-AFF6-4F00-B156-5A843659FF40} = {8C8EB220-C789-4A73-ABE8-1F29D45090F2}
 		{CD64BFBC-332B-43A7-B6CE-0A9D01B0B040} = {9FD51F47-F02B-459B-AD53-C093C6B41CF2}
 		{3E859B73-4468-4A74-B926-075268A673A8} = {9FD51F47-F02B-459B-AD53-C093C6B41CF2}
+		{AA8A9B8A-1455-4012-8596-C9820B4B5C08} = {57BB4855-C760-468D-B125-599C2568B7BA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {804BF014-1E9F-4CFF-A317-5CF9458EA8CF}
