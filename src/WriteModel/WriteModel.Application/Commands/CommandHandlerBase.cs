@@ -1,22 +1,20 @@
 ﻿using FluentResults;
-using Wolverine;
-using Wolverine.Attributes;
+using MassTransit;
 
 namespace WriteModel.Application.Commands
 {
-    [WolverineHandler]
-    public abstract class CommandHandlerBase<TCommand> where TCommand : class, ICommand
+    public abstract class CommandHandlerBase<TCommand> : IConsumer<TCommand> where TCommand : class, ICommand
     {
-        public async Task<Result<CommandResult>> HandleAsync(TCommand command, Envelope envelope)
+        public async Task Consume(ConsumeContext<TCommand> context)
         {
-            var result = await HandleAsync(command);
-            return result;
+            var result = await HandleAsync(context.Message);
+            await context.RespondAsync(result);
         }
 
         protected abstract Task<Result<CommandResult>> HandleAsync(TCommand context);
     }
 
-    // TODO what return
+    // TODO
     public record CommandResult
     {
         public Guid Id { get; init; }

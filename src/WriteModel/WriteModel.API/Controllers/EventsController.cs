@@ -1,7 +1,7 @@
 using WriteModel.Application.Commands;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
-using Wolverine;
+using MassTransit.Mediator;
 
 namespace WriteModel.API.Controllers
 {
@@ -10,9 +10,9 @@ namespace WriteModel.API.Controllers
     [Route("[controller]")]
     public class EventsController : ControllerBase
     {
-        private readonly IMessageBus _mediator;
+        private readonly IMediator _mediator;
 
-        public EventsController(IMessageBus mediator)
+        public EventsController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -20,24 +20,13 @@ namespace WriteModel.API.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> CreateEvent(CreateEventCommand createEventCommand)
         {
-            var result = await _mediator.InvokeAsync<Result<CommandResult>>(createEventCommand);
-           
-            return result switch
-            {
-                { IsSuccess: true } => Ok(result.Value.Id),
-                _ => BadRequest(result.Errors)
-            };
-        }
+            var client = _mediator.CreateRequestClient<CreateEventCommand>();
+            var result = await client.GetResponse<Result<CommandResult>>(createEventCommand);
 
-        [HttpPost("cancel")]
-        public async Task<IActionResult> CancelEvent(CancelEventCommand cancelEventCommand)
-        {
-            var result = await _mediator.InvokeAsync<Result<CommandResult>>(cancelEventCommand);
-
-            return result switch
+            return result.Message switch
             {
-                { IsSuccess: true } => Ok(result.Value.Id),
-                _ => BadRequest(result.Errors)
+                 { IsSuccess: true } => Ok(result.Message.Value.Id),
+                _ => BadRequest(result.Message.Errors)
             };
         }
     }

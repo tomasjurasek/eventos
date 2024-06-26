@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="WolverineFx" Version="2.8.0" />
+    <Folder Include="Queries\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Queries\" />
+    <PackageReference Include="MassTransit" Version="8.2.3" />
   </ItemGroup>
 
   <ItemGroup>

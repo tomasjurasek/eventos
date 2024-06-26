@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WriteModel.Domain", "WriteM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WriteModel.Tests", "WriteModel\WriteModel.Tests\WriteModel.Tests.csproj", "{91342082-35B2-4029-BB6C-9E7E2128AA47}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReadModel", "ReadModel", "{49D2D9C8-35EC-49C5-8946-0535E5A08B53}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

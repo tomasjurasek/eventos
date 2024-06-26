@@ -18,4 +18,8 @@
         <InternalsVisibleTo Include="WriteModel.Infrastructure" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="User\" />
+    </ItemGroup>
+
 </Project>
