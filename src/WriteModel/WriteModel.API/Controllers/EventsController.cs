@@ -2,6 +2,7 @@ using WriteModel.Application.Commands;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 using MassTransit.Mediator;
+using FluentResults.Extensions.AspNetCore;
 
 namespace WriteModel.API.Controllers
 {
@@ -21,13 +22,10 @@ namespace WriteModel.API.Controllers
         public async Task<IActionResult> CreateEvent(CreateEventCommand createEventCommand)
         {
             var client = _mediator.CreateRequestClient<CreateEventCommand>();
+
             var result = await client.GetResponse<Result<CommandResult>>(createEventCommand);
 
-            return result.Message switch
-            {
-                 { IsSuccess: true } => Ok(result.Message.Value.Id),
-                _ => BadRequest(result.Message.Errors)
-            };
+            return result.Message.ToActionResult();
         }
     }
 }

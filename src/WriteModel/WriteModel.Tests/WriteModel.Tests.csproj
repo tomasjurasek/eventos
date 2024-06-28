@@ -29,4 +29,8 @@
       <ProjectReference Include="..\WriteModel.Domain\WriteModel.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="IntegrationTests\" />
+    </ItemGroup>
+
 </Project>

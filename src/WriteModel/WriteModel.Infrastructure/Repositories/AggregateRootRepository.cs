@@ -1,28 +1,26 @@
 ﻿using FluentResults;
-using Microsoft.Extensions.Options;
 using Simplife.EventSourcing.Aggregates;
 using WriteModel.Domain.Common;
 using WriteModel.Domain.Event.Events;
-using WriteModel.Infrastructure.Options;
 using Marten;
-using Weasel.Core;
 
 namespace WriteModel.Infrastructure.Repositories
 {
     internal class AggregateRootRepository<TAggregate> : IAggregateRootRepository<TAggregate> where TAggregate : IAggregateRoot
     {
-        private readonly DocumentStore _store;
+        private readonly IDocumentStore _store;
 
-        public AggregateRootRepository(IOptions<EventStoreOptions> eventStoreOptions)
+        public AggregateRootRepository(IDocumentStore documentStore)
         {
+            _store = documentStore;
             // TODO
-            _store = DocumentStore.For(_ =>
-           {
-               _.DatabaseSchemaName = "events";
-               _.Connection(eventStoreOptions.Value.ConnectionString);
-               _.AutoCreateSchemaObjects = AutoCreate.None;
+           // _store = DocumentStore.For(_ =>
+           //{
+           //    _.DatabaseSchemaName = "events";
+           //    _.Connection(eventStoreOptions.Value.ConnectionString);
+           //    _.AutoCreateSchemaObjects = AutoCreate.None;
 
-           });
+           //});
         }
 
         public async Task<Result<TAggregate>> FindAsync(Guid Id)
@@ -30,7 +28,6 @@ namespace WriteModel.Infrastructure.Repositories
             var aggregate = default(IAggregateRoot);
             await using var session = _store.LightweightSession();
             var events = await session.Events.FetchStreamAsync(Id);
-
             // TODO
             //events.Select(s => aggregate.Rehydrate(s.Da))
             return Result.Ok();
@@ -41,7 +38,8 @@ namespace WriteModel.Infrastructure.Repositories
             await using var session = _store.LightweightSession();
 
             // TODO
-            //session.Events.AppendExclusive();
+            session.Events.StartStream(aggregate.Id, aggregate.GetUncommittedEvents());
+            await session.SaveChangesAsync();
             return Result.Ok();
 
         }
