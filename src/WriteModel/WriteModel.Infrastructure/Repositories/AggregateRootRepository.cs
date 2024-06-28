@@ -38,7 +38,7 @@ namespace WriteModel.Infrastructure.Repositories
             await using var session = _store.LightweightSession();
 
             // TODO
-            session.Events.StartStream(aggregate.Id, aggregate.GetUncommittedEvents());
+            session.Events.Append(aggregate.Id, aggregate.GetUncommittedEvents());
             await session.SaveChangesAsync();
             return Result.Ok();
 
