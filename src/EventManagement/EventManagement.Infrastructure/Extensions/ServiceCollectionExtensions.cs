@@ -26,11 +26,6 @@ namespace EventManagement.Infrastructure.Extensions
 
             services.AddSingleton<IAggregateRootRepository<EventAggregate>, AggregateRootRepository<EventAggregate>>();
 
-            services.AddMediator(cfg =>
-            {
-                cfg.AddConsumer<CreateEventCommandHandler>();
-            });
-
             return services;
         }
     }

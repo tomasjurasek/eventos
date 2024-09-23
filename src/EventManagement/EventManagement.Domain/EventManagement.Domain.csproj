@@ -14,8 +14,8 @@
   </ItemGroup>
 
     <ItemGroup>
-        <InternalsVisibleTo Include="WriteModel.Tests" />
-        <InternalsVisibleTo Include="WriteModel.Infrastructure" />
+        <InternalsVisibleTo Include="EventManagement.Tests" />
+        <InternalsVisibleTo Include="EventManagement.Infrastructure" />
     </ItemGroup>
 
 </Project>

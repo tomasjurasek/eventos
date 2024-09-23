@@ -7,18 +7,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoMapper" Version="13.0.1" />
-        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
         <PackageReference Include="FluentResults.Extensions.AspNetCore" Version="0.1.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.6" />
         <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.9.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+        <PackageReference Include="WolverineFx" Version="2.17.2" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\Shared\ServiceDefaults\ServiceDefaults.csproj" />
-      <ProjectReference Include="..\WriteModel.Application\WriteModel.Application.csproj" />
-      <ProjectReference Include="..\WriteModel.Infrastructure\WriteModel.Infrastructure.csproj" />
+      <ProjectReference Include="..\EventManagement.Application\EventManagement.Application.csproj" />
+      <ProjectReference Include="..\EventManagement.Infrastructure\EventManagement.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

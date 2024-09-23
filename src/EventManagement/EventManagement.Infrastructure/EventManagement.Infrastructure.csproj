@@ -11,12 +11,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <InternalsVisibleTo Include="WriteModel.Tests" />
+        <InternalsVisibleTo Include="EventManagement.Tests" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\WriteModel.Application\WriteModel.Application.csproj" />
-      <ProjectReference Include="..\WriteModel.Domain\WriteModel.Domain.csproj" />
+      <ProjectReference Include="..\EventManagement.Application\EventManagement.Application.csproj" />
+      <ProjectReference Include="..\EventManagement.Domain\EventManagement.Domain.csproj" />
     </ItemGroup>
 
 </Project>

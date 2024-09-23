@@ -1,7 +1,7 @@
 ﻿using FluentResults;
 using MassTransit;
 
-namespace WriteModel.Application.Commands
+namespace EventManagement.Application.Commands
 {
     public abstract class CommandHandlerBase<TCommand> : IConsumer<TCommand> where TCommand : class, ICommand
     {

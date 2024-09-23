@@ -1,7 +1,13 @@
 using EventManagement.Infrastructure.Extensions;
 using EventManagement.Application.Extensions;
+using Wolverine;
 
 var builder = WebApplication.CreateBuilder(args);
+
+await builder.Host.UseWolverine(o =>
+{
+    o.Durability.Mode = DurabilityMode.MediatorOnly;
+}).StartAsync();
 
 builder.AddServiceDefaults();
 

@@ -1,8 +1,8 @@
 using EventManagement.Application.Commands;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
-using MassTransit.Mediator;
 using FluentResults.Extensions.AspNetCore;
+using Wolverine;
 
 namespace EventManagement.API.Controllers
 {
@@ -11,9 +11,9 @@ namespace EventManagement.API.Controllers
     [Route("[controller]")]
     public class EventsController : ControllerBase
     {
-        private readonly IMediator _mediator;
+        private readonly IMessageBus _mediator;
 
-        public EventsController(IMediator mediator)
+        public EventsController(IMessageBus mediator)
         {
             _mediator = mediator;
         }
@@ -21,11 +21,8 @@ namespace EventManagement.API.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> CreateEvent(CreateEventCommand createEventCommand)
         {
-            var client = _mediator.CreateRequestClient<CreateEventCommand>();
-
-            var result = await client.GetResponse<Result<CommandResult>>(createEventCommand);
-
-            return result.Message.ToActionResult();
+            var result = await _mediator.InvokeAsync<Result<CommandResult>>(createEventCommand);
+            return result!.ToActionResult();
         }
     }
 }

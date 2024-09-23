@@ -1,11 +1,10 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var eventStore = builder.AddPostgresContainer("EventStore");
-var writeModelApi = builder.AddProject<Projects.WriteModel_API>("writeModelApi")
+var eventStore = builder.AddPostgres("eventstore");
+var eventManagement = builder.AddProject<Projects.EventManagement_API>("eventmanagement")
     .WithReference(eventStore);
 
-
 builder.AddProject<Projects.Gateway>("gateway")
-    .WithReference(writeModelApi);
+    .WithReference(eventManagement);
 
 builder.Build().Run();
